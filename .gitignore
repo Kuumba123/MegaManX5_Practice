@@ -1,0 +1,8 @@
+#Build artifacts
+output/
+debug/
+backup/
+overlay.ld
+Makefile
+*.dep
+*.o

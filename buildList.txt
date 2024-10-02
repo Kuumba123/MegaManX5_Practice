@@ -1,0 +1,18 @@
+// version, section, address, offset, path, binary name [optional]
+american, exe , 0x80020fa0 , 0x0 , src/debugfont/loadFontFile.c
+american, FONT, 0x801030a0 , 0x0 , src/debugfont/font.c , FONT.BIN
+american, exe , 0x80012534 , 0x0 , src/debugfont/loadFont.s
+american, exe , 0x80013bbc , 0x0 , src/debugfont/loadFont2.s
+american, exe , 0x80011f84 , 0x0 , src/debugfont/fontFlushHook.s
+
+american, exe , 0x800289d8 , 0x0 , src/swapTexture.c
+american, exe , 0x80011f9c , 0x0 , src/swapTextureHook.s
+
+american, exe , 0x800710e4 , 0x0 , src/modeTable.c
+
+american, exe , 0x800703cc , 0x0 , src/clut.c
+
+
+
+//State overlay
+american, STATE , 0x801F5664 , 0x0 , src/state.c src/practice.c , STATE.BIN
