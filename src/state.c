@@ -134,7 +134,7 @@ void SaveState() //TODO: check Duff-McWhalen Submarine code & fix WARNING + Refi
     ThreadSleep(10); // Waiting before transfering
 
     // backup enemy data other vars
-    Enemy *p = enemyDataPointers[game.stageid * 2 + game.mid];
+    Enemy *p = enemyDataPointers[game.stageId * 2 + game.mid];
     uint8_t *p2 = 0x1F800128;
     while ((p->type & 0xF) != 0xF)
     {
@@ -198,7 +198,7 @@ void LoadState()
     ThreadSleep(10); // Waiting before transfering
 
     // restore enemy data
-    Enemy *p = enemyDataPointers[game.stageid * 2 + game.mid];
+    Enemy *p = enemyDataPointers[game.stageId * 2 + game.mid];
     uint8_t *p2 = 0x1F800128;
     while ((p->type & 0xF) != 0xF)
     {

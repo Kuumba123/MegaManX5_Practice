@@ -4,6 +4,9 @@ clutPointer = 0x1F800028;
 
 enemyDataPointers = 0x80072eac;
 
+title = 0x800d1f28;
 
 loadState = 0x8009811c;
 LoadCompressedImage = 0x80017348;
+
+ResetGameSettings = 0x8002cf20;
