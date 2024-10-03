@@ -14,6 +14,8 @@ american, exe , 0x800703cc , 0x0 , src/clut.c
 
 american, exe , 0x80020b68 , 0x0 , src/determineTitleOptionHook.s
 
+american, exe , 0x80033460 , 0x0 , src/exit.s
+
 american, exe , 0x80070ee4 , 0x0 , src/titleTable.c
 american, exe , 0x8001e2e4 , 0x0 , src/title.c
 american NULL, ST0E_OVL , 0x800eebc0 , 0x0 , src/titleTextSpec.c 
