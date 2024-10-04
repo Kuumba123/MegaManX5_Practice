@@ -1,10 +1,13 @@
 #include <common.h>
 #include <object.h>
 #include <misc.h>
+#include "practice.h"
 
 extern bool LevelMidTable[];
 
 extern uint32_t swapTextureFlag;
+
+void SwapTexture(bool sync);
 
 void CreateTitleScreenThread();
 
@@ -28,6 +31,15 @@ void DetermineClear(Game *gameP)
         {
             gameP->point = 1;
         }
+
+        LoadLevel();
+
+        if (practice.page != 0)
+        {
+            SwapTexture(false);
+            practice.page = 1;
+        }
+        practice.state.made = false;
 
         gameP->mode = 9;
         gameP->mode2 = 0;
@@ -97,4 +109,10 @@ void DetermineClear(Game *gameP)
             }
         }
     }
+}
+void ResetState()
+{
+    practice.state.made = false;
+    practice.page = 0;
+    LoadLevel();   
 }
