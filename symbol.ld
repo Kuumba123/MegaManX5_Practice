@@ -10,3 +10,6 @@ loadState = 0x8009811c;
 LoadCompressedImage = 0x80017348;
 
 ResetGameSettings = 0x8002cf20;
+
+LevelMidTable = 0x800710f0;
+CreateTitleScreenThread = 0x8001e6ac;

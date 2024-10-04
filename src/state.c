@@ -125,6 +125,7 @@ void SwapTexture(bool sync)
         p2 = (int)p2 + 0x2000;
         rect.y += 8;
     }
+    practice.page ^= 1;
 }
 void SaveState() //TODO: check Duff-McWhalen Submarine code & fix WARNING + Refights
 {
@@ -191,6 +192,7 @@ void SaveState() //TODO: check Duff-McWhalen Submarine code & fix WARNING + Refi
     size_t screenLength = ((*(uint32_t*)0x1F80000C) - (*(uint32_t*)0x1F800008)); //getting screen count via pointers
     MemoryCopy(*(uint32_t*)0x800A51A0, *(uint32_t*)0x1F800008, screenLength);
 
+    practice.state.page = practice.page;
     practice.state.made = true;
 }
 void LoadState()
@@ -244,10 +246,11 @@ void LoadState()
 
     /*maybe create a flag and XOR when SwapTexture function is called*/
 
-    if (swapTextureFlag == 2 && practice.state.textureFlag != 2)
+    if (practice.page != practice.state.page)
     {
         SwapTexture(false);
     }
+    practice.page = practice.state.page;
     swapTextureFlag = practice.state.textureFlag;
     *(uint8_t*)0x800A51A6 = practice.state.pastBright;
     *(uint8_t*)0x800d1f3c = practice.state.songSeekFlag;

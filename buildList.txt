@@ -16,6 +16,10 @@ american, exe , 0x80020b68 , 0x0 , src/determineTitleOptionHook.s
 
 american, exe , 0x80033460 , 0x0 , src/exit.s
 
+american, exe , 0x800205ac , 0x0 , src/determineClear.c
+
+american NULL , ST06_1_OVL , 0x800f9e48 , 0x0 , src/stage06_textureFix.c
+
 american, exe , 0x80070ee4 , 0x0 , src/titleTable.c
 american, exe , 0x8001e2e4 , 0x0 , src/title.c
 american NULL, ST0E_OVL , 0x800eebc0 , 0x0 , src/titleTextSpec.c 
