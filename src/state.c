@@ -19,7 +19,7 @@ extern uint8_t loadState; /*1=loading*/
 
 static void (*mode_A_Table[2])(Game *) = {0x80020D98, 0x80020E94};
 
-void LoadCompressedImage(Object * objP,int16_t x,int16_t y);
+void LoadCompressedImage(Object *objP, int16_t x, int16_t y);
 
 static void *freeAddress[] = {
     -1,         // End of Clut (dynamicly set based off of CLUT Pointer)
@@ -28,8 +28,8 @@ static void *freeAddress[] = {
     0x801F6000, // Demo Buffer
     0x801F8304, // Just before Thread Stack Memory
     0x801EF254, // End of ARC buffer
-    0x8000A000, //Kernal RAM
-    0x8000E440  //Kernal RAM
+    0x8000A000, // Kernal RAM
+    0x8000E440  // Kernal RAM
 };
 
 static int freeAddressSizes[] = {
@@ -127,7 +127,7 @@ void SwapTexture(bool sync)
     }
     practice.page ^= 1;
 }
-void SaveState() //TODO: check Duff-McWhalen Submarine code & fix WARNING + Refights
+void SaveState() // TODO: check Duff-McWhalen Submarine code for fix & fix WARNING & Bosses Refights
 {
     readAddress[0] = clutPointer;
     freeAddress[0] = (int)clutPointer + 0x2800;
@@ -181,16 +181,17 @@ void SaveState() //TODO: check Duff-McWhalen Submarine code & fix WARNING + Refi
         }
     }
 
-    //save quad objects
-    RECT rect = {0,500,256,12};
+    // save quad objects
+    RECT rect = {0, 500, 256, 12};
     LoadImage2(&rect, 0x8009F9A0);
 
     practice.state.textureFlag = swapTextureFlag;
-    practice.state.pastBright = *(uint8_t*)0x800A51A6;
-    practice.state.songSeekFlag = *(uint8_t*)0x800d1f3c;
+    practice.state.pastBright = *(uint8_t *)0x800A51A6;
+    practice.state.songSeekFlag = *(uint8_t *)0x800d1f3c;
+    practice.state.flameTimer = *(uid_t *)0x800f5965;
 
-    size_t screenLength = ((*(uint32_t*)0x1F80000C) - (*(uint32_t*)0x1F800008)); //getting screen count via pointers
-    MemoryCopy(*(uint32_t*)0x800A51A0, *(uint32_t*)0x1F800008, screenLength);
+    size_t screenLength = ((*(uint32_t *)0x1F80000C) - (*(uint32_t *)0x1F800008)); // getting screen count via pointers
+    MemoryCopy(*(uint32_t *)0x800A51A0, *(uint32_t *)0x1F800008, screenLength);
 
     practice.state.page = practice.page;
     practice.state.made = true;
@@ -222,7 +223,7 @@ void LoadState()
     SizeCheck:
         if (dumpSize > freeSize)
         {
-            memcpy(srcAddr, freeP, freeSize);
+            MemoryCopy(srcAddr, freeP, freeSize);
             srcAddr += freeSize;
             dumpSize -= freeSize;
 
@@ -234,17 +235,15 @@ void LoadState()
         }
         else
         {
-            memcpy(srcAddr, freeP, dumpSize);
+            MemoryCopy(srcAddr, freeP, dumpSize);
             freeP += dumpSize;
             freeSize -= dumpSize;
         }
     }
 
-    //restore quad objects
-    RECT rect = {0,500,256,12};
+    // restore quad objects
+    RECT rect = {0, 500, 256, 12};
     StoreImage2(&rect, 0x8009F9A0);
-
-    /*maybe create a flag and XOR when SwapTexture function is called*/
 
     if (practice.page != practice.state.page)
     {
@@ -252,22 +251,24 @@ void LoadState()
     }
     practice.page = practice.state.page;
     swapTextureFlag = practice.state.textureFlag;
-    *(uint8_t*)0x800A51A6 = practice.state.pastBright;
-    *(uint8_t*)0x800d1f3c = practice.state.songSeekFlag;
+    *(uint8_t *)0x800A51A6 = practice.state.pastBright;
+    *(uint8_t *)0x800d1f3c = practice.state.songSeekFlag;
+    if (game.stageId == 4 && game.mid == 0)
+    {
+        *(uint8_t *)0x800f5965 = practice.state.flameTimer;
+    }
 
     mega.newAnimeF = -1;
-    LoadCompressedImage((Object*)&mega,320,0);
+    LoadCompressedImage((Object *)&mega, 320, 0);
 
+    size_t screenLength = ((*(uint32_t *)0x1F80000C) - (*(uint32_t *)0x1F800008)); // getting screen count via pointers
+    MemoryCopy(*(uint32_t *)0x1F800008, *(uint32_t *)0x800A51A0, screenLength);
 
-    size_t screenLength = ((*(uint32_t*)0x1F80000C) - (*(uint32_t*)0x1F800008)); //getting screen count via pointers
-    MemoryCopy(*(uint32_t*)0x1F800008, *(uint32_t*)0x800A51A0, screenLength);
-
-    *(uint8_t*)0x800c9310 = 1;  //Update Clut
+    *(uint8_t *)0x800c9310 = 1; // Update Clut
 
     bgLayers[0].update = true;
     bgLayers[1].update = true;
     bgLayers[2].update = true;
-
 }
 
 void StateCheck(Game *gameP)
@@ -278,9 +279,7 @@ void StateCheck(Game *gameP)
     int seconds = totalSeconds % 60;
     int frames = time % 60;
 
-    DrawDebugText(4,3,0, "%2d:%2d:%2d", minutes , seconds , frames);
-
-    
+    DrawDebugText(4, 3, 0, "%2d:%2d:%2d", minutes, seconds, frames);
 
     if (loadState == 1)
     {

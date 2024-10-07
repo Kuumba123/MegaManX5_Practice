@@ -19,13 +19,15 @@ american, exe , 0x80033460 , 0x0 , src/exit.s
 american, exe , 0x800205ac , 0x0 , src/determineClear.c
 american, exe , 0x80020d00 , 0x0 , src/stateResetHook.s
 
-american NULL , ST06_1_OVL , 0x800f9e48 , 0x0 , src/stage06_textureFix.c
-american NULL , ST07_OVL , 0x800fa618 , 0x0 , src/stage07_textureFix.c
+american NORELOAD , ST04_OVL , 0x800eeaf0 , 0x0 , src/stage04_textureFix.c
+american NORELOAD , ST04_OVL , 0x800f25a8 , 0x0 , src/stage04_textureFix2.c
+american NORELOAD , ST06_1_OVL , 0x800f9e48 , 0x0 , src/stage06_textureFix.c
+american NORELOAD , ST07_OVL , 0x800fa618 , 0x0 , src/stage07_textureFix.c
 
 american, exe , 0x80070ee4 , 0x0 , src/titleTable.c
 american, exe , 0x8001e2e4 , 0x0 , src/title.c
-american NULL, ST0E_OVL , 0x800eebc0 , 0x0 , src/titleTextSpec.c 
-american NULL, ST0E_OVL , 0x800eea40 , 0x0 , src/titleTextObject.c
+american NORELOAD, ST0E_OVL , 0x800eebc0 , 0x0 , src/titleTextSpec.c 
+american NORELOAD, ST0E_OVL , 0x800eea40 , 0x0 , src/titleTextObject.c
 
 //State overlay
 american, STATE , 0x801F5664 , 0x0 , src/state.c src/practice.c , STATE.BIN

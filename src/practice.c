@@ -6,6 +6,7 @@ typedef struct
     uint32_t textureFlag;
     uint8_t pastBright;
     uint8_t songSeekFlag;
+    uint8_t flameTimer;
 
     uint8_t page;
     bool made;

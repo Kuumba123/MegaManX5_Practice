@@ -1,0 +1,1 @@
+/*0x374 bytes til sector is crossed (aslo 2 routes: All Stages , Any%)*/
