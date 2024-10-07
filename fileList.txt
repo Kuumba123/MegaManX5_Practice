@@ -1,2 +1,4 @@
 american , output/FONT.BIN
 american , output/STATE.BIN
+
+american , arc/ROCK_X5.DAT , ROCK_X5.DAT

@@ -1,0 +1,5 @@
+# Mark images as binary
+*.jpg binary
+*.png binary
+# MegaMan X5 related files
+*.ARC binary

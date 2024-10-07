@@ -18,6 +18,14 @@
           "set substitute-path /project ."
         ],
         "valuesFormatting": "parseText"
-      }
+      },
+      {
+        "name": "Python DAT-WRITE",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "arc/datwrite.py",
+        "console": "integratedTerminal",
+        "args": ["arc/ARC_75 (ST0D_00.ARC).ARC","arc/ROCK_X5.DAT", "0x75"]
+    }
     ]
 }
