@@ -127,7 +127,7 @@ void SwapTexture(bool sync)
     }
     practice.page ^= 1;
 }
-void SaveState() // TODO: check Duff-McWhalen Submarine code for fix & fix Refights
+void SaveState() // TODO: check Duff-McWhalen Submarine code for fix & fix Refights & Fix Matrix Wall Destroyied Tracking
 {
     readAddress[0] = clutPointer;
     freeAddress[0] = (int)clutPointer + 0x2800;

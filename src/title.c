@@ -129,3 +129,4 @@ void DetermineTitleOption()
     }
     
 }
+#undef Cursor
