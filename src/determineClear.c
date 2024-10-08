@@ -33,6 +33,7 @@ void DetermineClear(Game *gameP)
         }
 
         LoadLevel();
+        *(int8_t*)0x80020d14 = 0; //reload flag for non refight boss textures
 
         if (practice.page != 0)
         {
@@ -121,5 +122,16 @@ void ResetState()
 {
     practice.state.made = false;
     practice.page = 0;
+
+    for (size_t a = 0; a < 2; a++)
+    {
+        for (size_t b = 0; b < 32; b++)
+        {
+            game.speenTextBoxes[a][b] = 0;
+        }
+        
+    }
+    
+    
     LoadLevel();
 }

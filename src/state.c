@@ -127,7 +127,7 @@ void SwapTexture(bool sync)
     }
     practice.page ^= 1;
 }
-void SaveState() // TODO: check Duff-McWhalen Submarine code for fix & fix WARNING & Bosses Refights and lastly CLUT for Training Stage
+void SaveState() // TODO: check Duff-McWhalen Submarine code for fix & fix Refights
 {
     readAddress[0] = clutPointer;
     freeAddress[0] = (int)clutPointer + 0x2800;
@@ -189,6 +189,10 @@ void SaveState() // TODO: check Duff-McWhalen Submarine code for fix & fix WARNI
     practice.state.pastBright = *(uint8_t *)0x800A51A6;
     practice.state.songSeekFlag = *(uint8_t *)0x800d1f3c;
     practice.state.flameTimer = *(uid_t *)0x800f5965;
+    practice.state.arcP = freeArcP;
+    practice.state.backupArcP = *(int*)0x800e95a4;
+    practice.state.reloadFlag = *(uint8_t*)0x800d1598;
+
 
     size_t screenLength = ((*(uint32_t *)0x1F80000C) - (*(uint32_t *)0x1F800008)); // getting screen count via pointers
     MemoryCopy(*(uint32_t *)0x800A51A0, *(uint32_t *)0x1F800008, screenLength);
@@ -252,7 +256,16 @@ void LoadState()
     practice.page = practice.state.page;
     swapTextureFlag = practice.state.textureFlag;
     *(uint8_t *)0x800A51A6 = practice.state.pastBright;
-    *(uint8_t *)0x800d1f3c = practice.state.songSeekFlag;
+    if (*(int8_t*)0x800e8060 != 0)
+    {
+        *(uint8_t *)0x800d1f3c = practice.state.songSeekFlag;
+    }else{
+        *(uint8_t *)0x800d1f3c = 0;
+    }
+    
+    freeArcP = practice.state.arcP;
+    *(int*)0x800e95a4 = practice.state.backupArcP;
+    *(uint8_t*)0x800d1598 = practice.state.reloadFlag;
     if (game.stageId == 4 && game.mid == 0)
     {
         *(uint8_t *)0x800f5965 = practice.state.flameTimer;
