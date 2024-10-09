@@ -8,7 +8,7 @@
  *   Being stored at the end of MOBJPAT.ARC (0x99C bytes free)
  */
 
-#define VariableSetsCount 20
+#define VariableSetsCount 22
 #define BuffersCount 8
 
 extern uint32_t swapTextureFlag;
@@ -20,6 +20,7 @@ extern uint8_t loadState; /*1=loading*/
 static void (*mode_A_Table[2])(Game *) = {0x80020D98, 0x80020E94};
 
 void LoadCompressedImage(Object *objP, int16_t x, int16_t y);
+void LoadBossRefightsArc();
 
 static void *freeAddress[] = {
     -1,         // End of Clut (dynamicly set based off of CLUT Pointer)
@@ -63,6 +64,8 @@ static void *readAddress[] = {
     0x800D50DC, // More Brightness stuff
     0x8009A42C, // Also More Brightness stuff
     0x80093dd0, // Brightness Table thing
+    0x800F595C, // Matrix Flames & Stuff
+    0x80102FD4  // Duff McWhalen Variables (keep last)
 };
 
 static int addressesSize[] = {
@@ -85,7 +88,9 @@ static int addressesSize[] = {
     8,      // Brightness stuff
     4,      // More Brightness stuff
     4,      // Also More Brightness stuff
-    0x28    // Brightness Table thing
+    0x28,   // Brightness Table thing
+    0xC,    // Matrix Flames & Stuff
+    0xC8    // Duff McWhalen Variables (keep last)
 };
 
 void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
@@ -127,7 +132,7 @@ void SwapTexture(bool sync)
     }
     practice.page ^= 1;
 }
-void SaveState() // TODO: check Duff-McWhalen Submarine code for fix & fix Refights & Fix Matrix Wall Destroyied Tracking
+void SaveState()
 {
     readAddress[0] = clutPointer;
     freeAddress[0] = (int)clutPointer + 0x2800;
@@ -188,7 +193,6 @@ void SaveState() // TODO: check Duff-McWhalen Submarine code for fix & fix Refig
     practice.state.textureFlag = swapTextureFlag;
     practice.state.pastBright = *(uint8_t *)0x800A51A6;
     practice.state.songSeekFlag = *(uint8_t *)0x800d1f3c;
-    practice.state.flameTimer = *(uid_t *)0x800f5965;
     practice.state.arcP = freeArcP;
     practice.state.backupArcP = *(int*)0x800e95a4;
     practice.state.reloadFlag = *(uint8_t*)0x800d1598;
@@ -215,11 +219,21 @@ void LoadState()
         p2 += 1;
     }
 
+    uint8_t pastPoint = game.point;
+    uint8_t pastFile = *(uint8_t*)0x800d1598;
+
     int freeId = 0;
     int freeSize = freeAddressSizes[freeId];
     uint freeP = freeAddress[freeId];
 
-    for (size_t i = 0; i < VariableSetsCount; i++)
+    uint32_t variableCount = VariableSetsCount;
+    if (game.stageId != 3)
+    {
+        variableCount = VariableSetsCount - 1;
+    }
+    
+
+    for (size_t i = 0; i < variableCount; i++)
     {
         int dumpSize = addressesSize[i];
         uint srcAddr = readAddress[i];
@@ -265,11 +279,28 @@ void LoadState()
     
     freeArcP = practice.state.arcP;
     *(int*)0x800e95a4 = practice.state.backupArcP;
+
     *(uint8_t*)0x800d1598 = practice.state.reloadFlag;
-    if (game.stageId == 4 && game.mid == 0)
+
+    if (game.stageId == 0xC)
     {
-        *(uint8_t *)0x800f5965 = practice.state.flameTimer;
+        if (game.point >= 2 && game.point <= 9 && game.point != pastPoint)
+        {
+            EndSong();
+            LoadBossRefightsArc();
+            ThreadSleep(2);
+            FadeIn(10);
+            while (fadeDirection != 0)
+            {
+                ThreadSleep(1);
+            }
+            
+        }else
+        {
+            *(uint8_t*)0x800d1598 = 0;
+        }
     }
+    
 
     mega.newAnimeF = -1;
     LoadCompressedImage((Object *)&mega, 320, 0);

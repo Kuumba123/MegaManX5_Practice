@@ -8,6 +8,7 @@ title = 0x800d1f28;
 
 loadState = 0x8009811c;
 LoadCompressedImage = 0x80017348;
+LoadBossRefightsArc = 0x80013524;
 
 ResetGameSettings = 0x8002cf20;
 

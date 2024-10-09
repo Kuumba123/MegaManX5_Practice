@@ -33,7 +33,7 @@ void DetermineClear(Game *gameP)
         }
 
         LoadLevel();
-        *(int8_t*)0x80020d14 = 0; //reload flag for non refight boss textures
+        *(int8_t*)0x800d1598 = 0; //reload flag for non refight boss textures
 
         if (practice.page != 0)
         {
@@ -58,7 +58,7 @@ void DetermineClear(Game *gameP)
             gameP->weaponTemp = mega.weapon;
             gameP->virusMeterTemp = mega.virusMeter;
 
-            if (gameP->stageId = 6) // Teleporter in 2nd Half of Izzy Glow
+            if (gameP->stageId == 6) // Teleporter in 2nd Half of Izzy Glow
             {
                 swapTextureFlag = 1;
             }
@@ -74,6 +74,7 @@ void DetermineClear(Game *gameP)
             gameP->mode2 = 0;
             gameP->mode3 = 0;
             gameP->mode4 = 0;
+            gameP->clear = 0;
         }
         else // Actual Real Clear
         {
