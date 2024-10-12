@@ -76,8 +76,3 @@ LAB_ST0E_OVL__800eeb08:
     }
     return;
 }
-
-void ShowPracticeTitleText()
-{
-    DrawDebugText(9,15,0, "Practice Hack 1.0\n\t\tBy Kuumba");
-}

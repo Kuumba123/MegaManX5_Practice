@@ -11,6 +11,8 @@ void SwapTexture(bool sync);
 
 void CreateTitleScreenThread();
 
+void LoadBackupScreens();
+
 void DetermineClear(Game *gameP)
 {
     gameP->stageTime = gameP->stageTime + mega.stageTime;
@@ -32,13 +34,20 @@ void DetermineClear(Game *gameP)
             gameP->point = 1;
         }
 
-        LoadLevel();
-        *(int8_t*)0x800d1598 = 0; //reload flag for non refight boss textures
+        if (gameP->stageId != 0 || gameP->point != 3)
+        {
+            LoadLevel();
+        }
+
+        *(int8_t *)0x800d1598 = 0; // reload flag for non refight boss textures
 
         if (practice.page != 0)
         {
-            SwapTexture(false);
-            practice.page = 1;
+            if (gameP->stageId != 0 || gameP->point != 3)
+            {
+                SwapTexture(false);
+                practice.page = 1;
+            }
         }
         practice.state.made = false;
 
@@ -130,9 +139,31 @@ void ResetState()
         {
             game.speenTextBoxes[a][b] = 0;
         }
-        
     }
-    
-    
+
     LoadLevel();
+}
+void BackupScreenChck()
+{
+    if (game.stageId != 0xC || game.point != 3)
+    {
+        LoadBackupScreens();
+    }
+}
+void MemoryCopy(void *dest, const void *src, size_t size)
+{
+    // Ensure that the size is a multiple of 4 bytes
+    size_t num_4byte_blocks = size / 4;
+
+    uint32_t *d = (uint32_t *)dest;
+    const uint32_t *s = (const uint32_t *)src;
+
+    for (size_t i = 0; i < num_4byte_blocks; i++)
+    {
+        d[i] = s[i];
+    }
+}
+void ShowPracticeTitleText()
+{
+    DrawDebugText(9, 15, 0, "Practice Hack BETA\n\t\tBy Kuumba");
 }

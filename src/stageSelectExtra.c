@@ -22,6 +22,7 @@ static uint8_t maverickPlayerTable[2][8] =
 void AssignWeapons() //2 routes: All Stages & Any%
 {
     game.armorParts = 0;
+    game.armors = 0;
     game.clearedStages = 0;
     game.collectables = 0;
     game.collectables2 = 0;

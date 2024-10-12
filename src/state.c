@@ -8,7 +8,7 @@
  *   Being stored at the end of MOBJPAT.ARC (0x99C bytes free)
  */
 
-#define VariableSetsCount 22
+#define VariableSetsCount 20
 #define BuffersCount 8
 
 extern uint32_t swapTextureFlag;
@@ -22,92 +22,20 @@ static void (*mode_A_Table[2])(Game *) = {0x80020D98, 0x80020E94};
 void LoadCompressedImage(Object *objP, int16_t x, int16_t y);
 void LoadBossRefightsArc();
 
-static void *freeAddress[] = {
-    -1,         // End of Clut (dynamicly set based off of CLUT Pointer)
-    0x8009CF90, // End of Inverted Clut
-    0x800A39A0, // End of Backup Clut
-    0x801F6000, // Demo Buffer
-    0x801F8304, // Just before Thread Stack Memory
-    0x801EF254, // End of ARC buffer
-    0x8000A000, // Kernal RAM
-    0x8000E440  // Kernal RAM
-};
+extern void *freeAddress[];
+extern int freeAddressSizes[];
+extern void *readAddress[];
+extern int addressesSize[];
 
-static int freeAddressSizes[] = {
-    0x1800,
-    0x1800,
-    0x1800,
-    0x2000,
-    0x65FC,
-    0x3DB0 - 4,
-    0x1900,
-    0x1BC0};
+extern void *maverickRefightBssAddresses[];
+extern uint8_t maverickRefightBssSizes[];
 
-static void *readAddress[] = {
-    -1,         // Clut (dynamicly set based off of CLUT Pointer)
-    0x8009A790, // Inverted Clut
-    0x80098120, // Weapon Objects
-    0x80092090, // Main Objects
-    0x80094398, // Shot Objects
-    0x80096D98, // Visual Objects
-    0x8009E7A0, // Effect Objects
-    0x800C6A10, // Item Objects
-    0x800D1F40, // Misc Objects
-    0x800C94A8, // Layer Objects
-    0x8009A0A0, // Mega
-    0x8009A1F8, // BG Layers
-    0x800D1C00, // Game Info
-    0x800D1dC0, // Ride Armor
-    0x80091C38, // Text Info
-    0x800E8514, // Extra Text Info
-    0x80093E64, // Brightness stuff
-    0x800D50DC, // More Brightness stuff
-    0x8009A42C, // Also More Brightness stuff
-    0x80093dd0, // Brightness Table thing
-    0x800F595C, // Matrix Flames & Stuff
-    0x80102FD4  // Duff McWhalen Variables (keep last)
-};
-
-static int addressesSize[] = {
-    0x2800, // Clut
-    0x2800, // Inverted Clut
-    0x1380, // Weapon Objects
-    0x1D40, // Main Objects
-    0x2A00, // Shot Objects
-    0x1380, // Visual Objects
-    0x1200, // Effect Objects
-    0x2900, // Item Objects
-    0x3000, // Misc Objects
-    0xC0,   // Layer Objects
-    0x158,  // Mega
-    0xFC,   // BG Layers
-    0x1B8,  // Game Info
-    0xC0,   // Ride Armor
-    0x18,   // Text Info
-    0x104,  // Extra Text Info
-    8,      // Brightness stuff
-    4,      // More Brightness stuff
-    4,      // Also More Brightness stuff
-    0x28,   // Brightness Table thing
-    0xC,    // Matrix Flames & Stuff
-    0xC8    // Duff McWhalen Variables (keep last)
-};
+extern void *stageBssAddresses[];
+extern uint8_t *stageBssSizes[];
 
 void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
 
-void MemoryCopy(void *dest, const void *src, size_t size)
-{
-    // Ensure that the size is a multiple of 4 bytes
-    size_t num_4byte_blocks = size / 4;
-
-    uint32_t *d = (uint32_t *)dest;
-    const uint32_t *s = (const uint32_t *)src;
-
-    for (size_t i = 0; i < num_4byte_blocks; i++)
-    {
-        d[i] = s[i];
-    }
-}
+void MemoryCopy(void *dest, const void *src, size_t size);
 
 void SwapTexture(bool sync)
 {
@@ -194,9 +122,17 @@ void SaveState()
     practice.state.pastBright = *(uint8_t *)0x800A51A6;
     practice.state.songSeekFlag = *(uint8_t *)0x800d1f3c;
     practice.state.arcP = freeArcP;
-    practice.state.backupArcP = *(int*)0x800e95a4;
-    practice.state.reloadFlag = *(uint8_t*)0x800d1598;
+    practice.state.backupArcP = *(int *)0x800e95a4;
+    practice.state.reloadFlag = *(uint8_t *)0x800d1598;
 
+    if (game.point >= 2 && game.point <= 9 && game.point && game.stageId == 0xC)
+    {
+        MemoryCopy(&practice.state.bss, maverickRefightBssAddresses[game.point - 2], maverickRefightBssSizes[game.point - 2]);
+    }else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0)
+    {
+        MemoryCopy(&practice.state.bss, stageBssAddresses[game.stageId * 2 + game.mid], stageBssSizes[game.stageId * 2 + game.mid]);
+    }
+    
 
     size_t screenLength = ((*(uint32_t *)0x1F80000C) - (*(uint32_t *)0x1F800008)); // getting screen count via pointers
     MemoryCopy(*(uint32_t *)0x800A51A0, *(uint32_t *)0x1F800008, screenLength);
@@ -220,20 +156,13 @@ void LoadState()
     }
 
     uint8_t pastPoint = game.point;
-    uint8_t pastFile = *(uint8_t*)0x800d1598;
+    uint8_t pastFile = *(uint8_t *)0x800d1598;
 
     int freeId = 0;
     int freeSize = freeAddressSizes[freeId];
     uint freeP = freeAddress[freeId];
 
-    uint32_t variableCount = VariableSetsCount;
-    if (game.stageId != 3)
-    {
-        variableCount = VariableSetsCount - 1;
-    }
-    
-
-    for (size_t i = 0; i < variableCount; i++)
+    for (size_t i = 0; i < VariableSetsCount; i++)
     {
         int dumpSize = addressesSize[i];
         uint srcAddr = readAddress[i];
@@ -262,7 +191,6 @@ void LoadState()
     // restore quad objects
     RECT rect = {0, 500, 256, 12};
     StoreImage2(&rect, 0x8009F9A0);
-
     if (practice.page != practice.state.page)
     {
         SwapTexture(false);
@@ -270,22 +198,26 @@ void LoadState()
     practice.page = practice.state.page;
     swapTextureFlag = practice.state.textureFlag;
     *(uint8_t *)0x800A51A6 = practice.state.pastBright;
-    if (*(int8_t*)0x800e8060 != 0)
+    if (*(int8_t *)0x800e8060 != 0)
     {
         *(uint8_t *)0x800d1f3c = practice.state.songSeekFlag;
-    }else{
+    }
+    else
+    {
         *(uint8_t *)0x800d1f3c = 0;
     }
-    
-    freeArcP = practice.state.arcP;
-    *(int*)0x800e95a4 = practice.state.backupArcP;
 
-    *(uint8_t*)0x800d1598 = practice.state.reloadFlag;
+    freeArcP = practice.state.arcP;
+    *(int *)0x800e95a4 = practice.state.backupArcP;
+    *(uint8_t *)0x800d1598 = practice.state.reloadFlag;
+
+    bool refightsBss = false;
 
     if (game.stageId == 0xC)
     {
         if (game.point >= 2 && game.point <= 9 && game.point != pastPoint)
         {
+            refightsBss = true;
             EndSong();
             LoadBossRefightsArc();
             ThreadSleep(2);
@@ -294,13 +226,19 @@ void LoadState()
             {
                 ThreadSleep(1);
             }
-            
-        }else
-        {
-            *(uint8_t*)0x800d1598 = 0;
         }
+        else
+        {
+            *(uint8_t *)0x800d1598 = 0;
+        }
+    }else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0){
+        MemoryCopy(stageBssAddresses[game.stageId * 2 + game.mid], &practice.state.bss, stageBssSizes[game.stageId * 2 + game.mid]);
     }
-    
+
+    if (refightsBss)
+    {
+        MemoryCopy(maverickRefightBssAddresses[game.point - 2], &practice.state.bss, maverickRefightBssSizes[game.point - 2]);
+    }
 
     mega.newAnimeF = -1;
     LoadCompressedImage((Object *)&mega, 320, 0);
