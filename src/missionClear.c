@@ -5,6 +5,11 @@ void MissionCleared(Game *gameP)
 {
     if (gameP->exitType == 2)
     {
+        if (gameP->slowMotion == 0x16)
+        {
+            CreateTitleScreenThread();
+            DeleteThread();
+        }
         gameP->mode = 3;
         gameP->clearedStages = 0;
         return;
@@ -39,6 +44,12 @@ void MissionCleared(Game *gameP)
 
             if (buttonsPressed != 0)
             {
+                if (gameP->slowMotion == 0x16)
+                {
+                    CreateTitleScreenThread();
+                    DeleteThread();
+                }
+
                 gameP->mode2 = 0;
                 gameP->mode = 3;
                 gameP->clearedStages = 0;
