@@ -1,5 +1,6 @@
 #include <common.h>
 #include <misc.h>
+#include "practice.h"
 
 #define Cursor titleP->mode3
 
@@ -22,6 +23,7 @@ void ResetGameSettings();
 void TitleLoop(struct Title *titleP)
 {
     ShowPracticeTitleText();
+    practice.skipRefights = 0;
     if (fadeDirection == 0)
     {
         if ((buttonsPressed & PAD_UP) != 0)
@@ -111,6 +113,7 @@ void TitleScreen_6_2(struct Title *titleP)
         if (selected != 0)
         {
             game.stageSelectMode = 10;
+            practice.skipRefights = 0;
         }
         
         NewThread(1, 0x80020904);

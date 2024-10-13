@@ -131,14 +131,10 @@ void ResetState()
     practice.state.made = false;
     practice.page = 0;
 
-    for (size_t a = 0; a < 2; a++)
+    if (practice.skipRefights)
     {
-        for (size_t b = 0; b < 32; b++)
-        {
-            game.speenTextBoxes[a][b] = 0;
-        }
+        game.point = 0xA;
     }
-
     LoadLevel();
 }
 void BackupScreenChck()

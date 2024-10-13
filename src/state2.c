@@ -11,16 +11,6 @@ void *freeAddress[] = {
     0x8000E440  // Kernal RAM
 };
 
-int freeAddressSizes[] = {
-    0x1800,
-    0x1800,
-    0x1800,
-    0x2000,
-    0x65FC,
-    0x3DB0 - 4,
-    0x1900,
-    0x1BC0};
-
 void *readAddress[] = {
     -1,         // Clut (dynamicly set based off of CLUT Pointer)
     0x8009A790, // Inverted Clut
@@ -44,29 +34,6 @@ void *readAddress[] = {
     0x80093dd0, // Brightness Table thing
 };
 
-int addressesSize[] = {
-    0x2800, // Clut
-    0x2800, // Inverted Clut
-    0x1380, // Weapon Objects
-    0x1D40, // Main Objects
-    0x2A00, // Shot Objects
-    0x1380, // Visual Objects
-    0x1200, // Effect Objects
-    0x2900, // Item Objects
-    0x3000, // Misc Objects
-    0xC0,   // Layer Objects
-    0x158,  // Mega
-    0xFC,   // BG Layers
-    0x1B8,  // Game Info
-    0xC0,   // Ride Armor
-    0x18,   // Text Info
-    0x104,  // Extra Text Info
-    8,      // Brightness stuff
-    4,      // More Brightness stuff
-    4,      // Also More Brightness stuff
-    0x28,   // Brightness Table thing
-};
-
 void *maverickRefightBssAddresses[] = {
     0x800FB8EC,
     0x800FFC2C,
@@ -88,6 +55,7 @@ uint8_t maverickRefightBssSizes[] = {
     0x04,
     0x14
 };
+
 
 void *stageBssAddresses[] = {
     0,0, //ST00
@@ -129,4 +97,38 @@ uint8_t *stageBssSizes[] = {
     0,0,
     0,0,
     0,0 //ST016
+};
+
+int16_t freeAddressSizes[] = {
+    0x1800,
+    0x1800,
+    0x1800,
+    0x2000,
+    0x65FC,
+    0x3DB0 - 4,
+    0x1900,
+    0x1BC0
+};
+
+int16_t addressesSize[] = {
+    0x2800, // Clut
+    0x2800, // Inverted Clut
+    0x1380, // Weapon Objects
+    0x1D40, // Main Objects
+    0x2A00, // Shot Objects
+    0x1380, // Visual Objects
+    0x1200, // Effect Objects
+    0x2900, // Item Objects
+    0x3000, // Misc Objects
+    0xC0,   // Layer Objects
+    0x158,  // Mega
+    0xFC,   // BG Layers
+    0x1B8,  // Game Info
+    0xC0,   // Ride Armor
+    0x18,   // Text Info
+    0x104,  // Extra Text Info
+    8,      // Brightness stuff
+    4,      // More Brightness stuff
+    4,      // Also More Brightness stuff
+    0x28,   // Brightness Table thing
 };

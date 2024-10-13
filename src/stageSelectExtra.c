@@ -57,12 +57,55 @@ void AssignWeapons() //2 routes: All Stages & Any%
 }
 
 
-static char * stageNames[] = {"SIGMA 1" , "SIGMA 2", "SIGMA 3" , "SIGMA 4", "Intro" , "Dynamo-1","Dynamo-2"};
+static const char * stageNames[] = {"SIGMA 1" , "SIGMA 2", "SIGMA 3" , "SIGMA 4", "Intro" , "Dynamo-1","Dynamo-2"};
+static const char * finalStageText[] = {"Start","POST-Refights"};
+static const char * halfText[] = {"Start","Mid"};
 
-void DrawSelectableStages()
+#define Cursor gameP->refights[2]
+
+void DrawSelectableStages(Game * gameP)
 {
-    DrawDebugText(12,18,2, stageNames[game.refights[2]]);
+    if (gameP->mode4 == 0)
+    {
+        DrawDebugText(12,18,2, stageNames[Cursor]);
+    }else{
+        if (gameP->stageId == 0xC)
+        {
+            DrawDebugText(12,18,2, finalStageText[Cursor]);
+        }else{
+            DrawDebugText(12,18,2, halfText[Cursor]);
+        }
+    }
+    
 }
+
+void ProcessStagePicker(Game * gameP)
+{
+    if ((buttonsPressed & PAD_LEFT) != 0)
+    {
+        Cursor -= 1;
+    }
+    else if ((buttonsPressed & PAD_RIGHT) != 0)
+    {
+        Cursor += 1;
+    }
+
+    if (gameP->mode4 == 0)
+    {
+        if ((int8_t)Cursor < 0)
+        {
+            Cursor = 6;
+        }
+        else if (Cursor >= 7)
+        {
+            Cursor = 0;
+        }
+    }else{
+        Cursor &= 1;
+    }
+}
+
+#undef Cursor
 
 void DrawRoutePage()
 {

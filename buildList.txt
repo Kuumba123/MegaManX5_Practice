@@ -18,7 +18,7 @@ american, exe , 0x80020b68 , 0x0 , src/determineTitleOptionHook.s
 american, exe , 0x80033460 , 0x0 , src/exit.s
 
 american, exe , 0x800205ac , 0x0 , src/determineClear.c
-american, exe , 0x80020d00 , 0x0 , src/stateResetHook.s
+american, exe , 0x80020cf4 , 0x0 , src/stateReset.c
 
 american NORELOAD , bin , 0x80105000 , 0x14 * 8 + 4, src/size.c
 

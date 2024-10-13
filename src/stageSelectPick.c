@@ -1,53 +1,78 @@
 #include <common.h>
+#include "practice.h"
 
 #define Cursor gameP->refights[2]
 
-void DrawSelectableStages();
+void DrawSelectableStages(Game *gameP);
+void ProcessStagePicker(Game *gameP);
 
-static uint8_t stagePickTable[] = {0x10 , 0x11 , 0x12 , 0xC , 0, 9 , 0xA};
+extern bool LevelMidTable[];
 
-void StageSelectPick(Game * gameP)
+static uint8_t stagePickTable[] = {0x10, 0x11, 0x12, 0xC, 0, 9, 0xA};
+
+void StageSelectPick(Game *gameP)
 {
-    if (gameP->stageId != 0xC) //8 Maverick Level Selected
+    practice.skipRefights = 0;
+    if (gameP->stageId != 0xC) // 8 Maverick Level Selected
     {
-        gameP->mode3 = 6;
-        return;
+        if (LevelMidTable[gameP->stageId])
+        {
+            gameP->mode3 = 6;
+            return;
+        }
+        else
+        {
+            gameP->mode4 = 1;
+        }
     }
+    DrawSelectableStages(gameP);
 
     int8_t cursorPast = Cursor;
-    
-    if ((buttonsPressed & PAD_LEFT) != 0)
-    {
-        Cursor -= 1;
-    }else if ((buttonsPressed & PAD_RIGHT) != 0)
-    {
-        Cursor += 1;
-    }
-    
-    if ((int8_t)Cursor < 0)
-    {
-        Cursor = 6;
-    }else if (Cursor >= 7)
-    {
-        Cursor = 0;
-    }
+
+    ProcessStagePicker(gameP);
 
     if (cursorPast != Cursor)
     {
-        PlaySound(5,0,0);
-    }
-    
-    if ((buttonsPressed & (PAD_START + PAD_CROSS)) != 0)
-    {
-        gameP->mode3 = 6;
-        gameP->stageId = stagePickTable[Cursor];
-        PlaySound(5,1,0);
-    }else if ((buttonsPressed & PAD_TRIANGLE) != 0) //Go Back to Maverick Select
-    {
-        gameP->mode3 = 8;
+        PlaySound(5, 0, 0);
     }
 
-    DrawSelectableStages();
+    if ((buttonsPressed & (PAD_START + PAD_CROSS)) != 0)
+    {
+        PlaySound(5, 1, 0);
+        if (gameP->mode4 == 0) // Non 2-way select
+        {
+            gameP->stageId = stagePickTable[Cursor];
+
+            if (gameP->stageId != 0xC)
+            {
+                gameP->mode3 = 6;
+                gameP->mode4 = 0;
+            }
+            else
+            {
+                gameP->mode4 = 1;
+                Cursor = 0;
+            }
+        }
+        else
+        {
+            if (gameP->stageId == 0xC)
+            {
+                practice.skipRefights = Cursor;
+                gameP->mode3 = 6;
+                gameP->mode4 = 0;
+            }else{
+                gameP->mid = Cursor;
+                gameP->mode3 = 6;
+                gameP->mode4 = 0;
+            }
+        }
+    }
+    else if ((buttonsPressed & PAD_TRIANGLE) != 0) // Go Back to Maverick Select
+    {
+        gameP->mode3 = 8;
+        gameP->mode4 = 0;
+    }
 }
 
 #undef Cursor

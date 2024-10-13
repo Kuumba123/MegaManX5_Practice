@@ -21,6 +21,7 @@ typedef struct{
     State state;
     uint8_t page;
     uint8_t route;
+    uint8_t skipRefights;
 }Practice;
 
 extern Practice practice;

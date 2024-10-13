@@ -23,9 +23,9 @@ void LoadCompressedImage(Object *objP, int16_t x, int16_t y);
 void LoadBossRefightsArc();
 
 extern void *freeAddress[];
-extern int freeAddressSizes[];
+extern int16_t freeAddressSizes[];
 extern void *readAddress[];
-extern int addressesSize[];
+extern int16_t addressesSize[];
 
 extern void *maverickRefightBssAddresses[];
 extern uint8_t maverickRefightBssSizes[];
@@ -125,6 +125,9 @@ void SaveState()
     practice.state.backupArcP = *(int *)0x800e95a4;
     practice.state.reloadFlag = *(uint8_t *)0x800d1598;
 
+    practice.state.page = practice.page;
+    practice.state.made = true;
+
     if (game.point >= 2 && game.point <= 9 && game.point && game.stageId == 0xC)
     {
         MemoryCopy(&practice.state.bss, maverickRefightBssAddresses[game.point - 2], maverickRefightBssSizes[game.point - 2]);
@@ -136,9 +139,6 @@ void SaveState()
 
     size_t screenLength = ((*(uint32_t *)0x1F80000C) - (*(uint32_t *)0x1F800008)); // getting screen count via pointers
     MemoryCopy(*(uint32_t *)0x800A51A0, *(uint32_t *)0x1F800008, screenLength);
-
-    practice.state.page = practice.page;
-    practice.state.made = true;
 }
 void LoadState()
 {
