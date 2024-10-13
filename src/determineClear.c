@@ -36,6 +36,7 @@ void DetermineClear(Game *gameP)
 
         if (gameP->stageId != 0 || gameP->point != 3)
         {
+            EndSong();
             LoadLevel();
         }
 
@@ -165,5 +166,5 @@ void MemoryCopy(void *dest, const void *src, size_t size)
 }
 void ShowPracticeTitleText()
 {
-    DrawDebugText(9, 15, 0, "Practice Hack BETA\n\t\tBy Kuumba");
+    DrawDebugText(9, 15, 0, "Practice Hack BETA2\n\t\tBy Kuumba");
 }
