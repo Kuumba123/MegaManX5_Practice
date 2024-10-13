@@ -89,17 +89,19 @@ void DetermineClear(Game *gameP)
         else // Actual Real Clear
         {
             gameP->spawnFlags = 0;
-            if (gameP->stageId == 0 || gameP->stageId > 8) // Intro & Dynamo & Sigma Stages
+            if (gameP->stageId == 0x16) // Training
             {
+                CreateTitleScreenThread();
+                DeleteThread();
+                return;
+            }
+            else if (gameP->stageId == 0 || gameP->stageId > 8) // Intro & Dynamo & Sigma Stages
+            {
+
                 gameP->mode = 0xB;
                 gameP->mode2 = 0;
                 gameP->mode3 = 0;
                 gameP->mode4 = 0;
-            }
-            else if (gameP->stageId == 0x16) // TRAINING
-            {
-                CreateTitleScreenThread();
-                DeleteThread();
                 return;
             }
             else if (gameP->stageId < 9) // 8 Maverick stages
