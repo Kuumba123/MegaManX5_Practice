@@ -8,7 +8,7 @@ void SpawnReploid(Object *objP)
     if (objP->animeInfo.flag == 1)
     {
         SetAnime(objP, 0);
-        CopyClut(0x120, *((int *)0x1f800030) + 0x320, 1);
+        CopyClut(0x120 + 3, *((int *)0x1f800030) + 0x320, 1);
         objP->act4 = 0;
         objP->act3 = 5;
 
@@ -26,7 +26,7 @@ void SpawnReploid(Object *objP)
             p->animeTableP = objP->animeTableP;
             p->texCord = objP->texCord;
             p->sprtDataP = objP->sprtDataP;
-            p->clutCord = GetClut(0,498);
+            p->clutCord = GetClutCord(0x120);
             p->flip = objP->flip;
 
             *(int *)((int)p + 0x50) = objP;
