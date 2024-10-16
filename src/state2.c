@@ -1,4 +1,5 @@
 #include <common.h>
+#include <gpu.h>
 
 void *freeAddress[] = {
     -1,         // End of Clut (dynamicly set based off of CLUT Pointer)
@@ -132,3 +133,14 @@ int16_t addressesSize[] = {
     4,      // Also More Brightness stuff
     0x28,   // Brightness Table thing
 };
+
+static RECT rect = {0, 500, 256, 12};
+
+void SaveQuadObjects()
+{
+    LoadImage2(&rect, 0x8009F9A0);
+}
+void RestoreQuadObjects()
+{
+    StoreImage2(&rect, 0x8009F9A0);
+}

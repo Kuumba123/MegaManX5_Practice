@@ -7,6 +7,8 @@ extern bool LevelMidTable[];
 
 extern uint32_t swapTextureFlag;
 
+void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
+
 void SwapTexture(bool sync);
 
 void CreateTitleScreenThread();
@@ -34,9 +36,14 @@ void DetermineClear(Game *gameP)
             gameP->point = 1;
         }
 
+        EndSong();
+
         if (gameP->stageId != 0 || gameP->point != 3)
         {
-            EndSong();
+            if (gameP->stageId == 0xC && (gameP->point == 0x15 || gameP->point == 0xA))
+            {
+                gameP->refights[3] = 0;
+            }
             LoadLevel();
         }
 
@@ -119,6 +126,10 @@ void DetermineClear(Game *gameP)
         }
     }
 }
+void DrawLoadText()
+{
+    DrawDebugText(4, 4, 2, "(Loading)");
+}
 void SwappedTextureCheck()
 {
     if (swapTextureFlag == 0)
@@ -130,6 +141,7 @@ void ResetState()
 {
     practice.state.made = false;
     practice.page = 0;
+    practice.sigmaOvl = 0;
 
     if (practice.skipRefights)
     {
@@ -159,5 +171,5 @@ void MemoryCopy(void *dest, const void *src, size_t size)
 }
 void ShowPracticeTitleText()
 {
-    DrawDebugText(9, 15, 0, "Practice Hack BETA2\n\t\tBy Kuumba");
+    DrawDebugText(9, 15, 0, "Practice Hack BETA3\n\t\tBy Kuumba");
 }

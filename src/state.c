@@ -33,9 +33,17 @@ extern uint8_t maverickRefightBssSizes[];
 extern void *stageBssAddresses[];
 extern uint8_t *stageBssSizes[];
 
+static RECT rect = {0, 500, 256, 12};
+
 void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
+void DrawLoadText();
 
 void MemoryCopy(void *dest, const void *src, size_t size);
+
+void SaveQuadObjects();
+void RestoreQuadObjects();
+
+void LoadSigmaOverlay(int ovl);
 
 void SwapTexture(bool sync)
 {
@@ -98,7 +106,7 @@ void SaveState()
 
             if (freeId > BuffersCount - 1)
             {
-                printf("ERROR: went past MAX buffer counts: %X\n", BuffersCount);
+                // printf("ERROR: went past MAX buffer counts: %X\n", BuffersCount); //need to comment out to save space
                 return;
             }
 
@@ -115,8 +123,7 @@ void SaveState()
     }
 
     // save quad objects
-    RECT rect = {0, 500, 256, 12};
-    LoadImage2(&rect, 0x8009F9A0);
+    SaveQuadObjects();
 
     practice.state.textureFlag = swapTextureFlag;
     practice.state.pastBright = *(uint8_t *)0x800A51A6;
@@ -124,20 +131,23 @@ void SaveState()
     practice.state.arcP = freeArcP;
     practice.state.backupArcP = *(int *)0x800e95a4;
     practice.state.reloadFlag = *(uint8_t *)0x800d1598;
-
     practice.state.page = practice.page;
-    practice.state.made = true;
+    practice.state.rng = *(uint16_t *)0x80093F70;
+    practice.state.sigmaOvl = practice.sigmaOvl;
+
+    practice.state.made = true; // Mark State as Made
 
     if (game.point >= 2 && game.point <= 9 && game.point && game.stageId == 0xC)
     {
         MemoryCopy(&practice.state.bss, maverickRefightBssAddresses[game.point - 2], maverickRefightBssSizes[game.point - 2]);
-    }else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0)
+    }
+    else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0)
     {
         MemoryCopy(&practice.state.bss, stageBssAddresses[game.stageId * 2 + game.mid], stageBssSizes[game.stageId * 2 + game.mid]);
     }
-    
 
     size_t screenLength = ((*(uint32_t *)0x1F80000C) - (*(uint32_t *)0x1F800008)); // getting screen count via pointers
+    practice.state.screenSize = screenLength;
     MemoryCopy(*(uint32_t *)0x800A51A0, *(uint32_t *)0x1F800008, screenLength);
 }
 void LoadState()
@@ -189,8 +199,8 @@ void LoadState()
     }
 
     // restore quad objects
-    RECT rect = {0, 500, 256, 12};
-    StoreImage2(&rect, 0x8009F9A0);
+    RestoreQuadObjects();
+    
     if (practice.page != practice.state.page)
     {
         SwapTexture(false);
@@ -208,8 +218,19 @@ void LoadState()
     }
 
     freeArcP = practice.state.arcP;
+    void *backup = practice.state.backupArcP;
     *(int *)0x800e95a4 = practice.state.backupArcP;
     *(uint8_t *)0x800d1598 = practice.state.reloadFlag;
+    if (practice.keepRng)
+    {
+        *(uint16_t *)0x80093F70 = practice.state.rng;
+    }
+
+    *(uint8_t *)0x800c9310 = 1; // Update Clut
+
+    bgLayers[0].update = true;
+    bgLayers[1].update = true;
+    bgLayers[2].update = true;
 
     bool refightsBss = false;
 
@@ -231,7 +252,28 @@ void LoadState()
         {
             *(uint8_t *)0x800d1598 = 0;
         }
-    }else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0){
+        if (practice.sigmaOvl != practice.state.sigmaOvl)
+        {
+            if (practice.state.sigmaOvl == 1)
+            {
+                LoadSigmaOverlay(0x26);
+                FileCollect2();
+                ArcSeek(0x88, 4, *(int *)0x8009a758);
+                DrawLoad(0, 0);
+                freeArcP = backup;
+            }
+            else if(practice.state.sigmaOvl == 2)
+            {
+                LoadSigmaOverlay(0x27);
+                FileCollect2();
+                ArcSeek(0x89, 4, *(int *)0x8009a758);
+                DrawLoad(0, 0);
+                freeArcP = backup;
+            }
+        }
+    }
+    else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0)
+    {
         MemoryCopy(stageBssAddresses[game.stageId * 2 + game.mid], &practice.state.bss, stageBssSizes[game.stageId * 2 + game.mid]);
     }
 
@@ -239,18 +281,11 @@ void LoadState()
     {
         MemoryCopy(maverickRefightBssAddresses[game.point - 2], &practice.state.bss, maverickRefightBssSizes[game.point - 2]);
     }
-
+    practice.sigmaOvl = practice.state.sigmaOvl;
+    *(uint32_t*)0x80091D54 = 1;
     mega.newAnimeF = -1;
     LoadCompressedImage((Object *)&mega, 320, 0);
-
-    size_t screenLength = ((*(uint32_t *)0x1F80000C) - (*(uint32_t *)0x1F800008)); // getting screen count via pointers
-    MemoryCopy(*(uint32_t *)0x1F800008, *(uint32_t *)0x800A51A0, screenLength);
-
-    *(uint8_t *)0x800c9310 = 1; // Update Clut
-
-    bgLayers[0].update = true;
-    bgLayers[1].update = true;
-    bgLayers[2].update = true;
+    MemoryCopy(*(uint32_t *)0x1F800008, *(uint32_t *)0x800A51A0, practice.state.screenSize);
 }
 
 void StateCheck(Game *gameP)
@@ -265,7 +300,7 @@ void StateCheck(Game *gameP)
 
     if (loadState == 1)
     {
-        DrawDebugText(4, 4, 2, "(Loading)");
+        DrawLoadText();
     }
 
     if (loadState != 1 && *(uint16_t *)0x801F8200 /*<-Fade In/Out Thread*/ == 0)

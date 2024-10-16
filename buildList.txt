@@ -21,6 +21,7 @@ american, exe , 0x800205ac , 0x0 , src/determineClear.c
 american, exe , 0x80020cf4 , 0x0 , src/stateReset.c
 
 american NORELOAD , bin , 0x80105000 , 0x14 * 8 + 4, src/size.c
+american NORELOAD , bin , 0x80105000 , 0x12 * 8 + 4, src/size2.c
 
 american NORELOAD , ST0D_OVL , 0x800f536c , 0 , src/stageSelectTable.c
 american NORELOAD , ST0D_OVL , 0x800f111c , 0 , src/selectRoute.c
@@ -54,6 +55,10 @@ american NORELOAD, ST0E_OVL , 0x800eea40 , 0x0 , src/titleTextObject.c
 
 american , exe , 0x800287f0 , 0x0 , src/loadLayout.c
 
+american NORELOAD , ST0C_OVL , 0x800f6b30 , 0x0 , src/sigmaHook.s
+american NORELOAD , ST0C_OVL , 0x800f6c30 , 0x0 , src/sigmaHook2.s
+
 //State overlays
-american, STATE , 0x801F5664 , 0x0 , src/state.c, STATE.BIN
+american, ST0C_OVL , 0x800F80F8 , 0x0 , src/state3.c
 american, STATE , 0x8009a430 , 0x0 , src/state2.c src/practice.c , STATE2.BIN
+american, STATE , 0x801F5664 , 0x0 , src/state.c, STATE.BIN
