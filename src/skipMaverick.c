@@ -20,6 +20,11 @@ void SkipMaverickShowcase(Game *gameP)
     {
         gameP->refights[i] = 0;
     }
+    if (gameP->stageId != 0xC)
+    {
+        gameP->refights[0] = 1;
+    }
+    
     gameP->mode = 7;
     gameP->mode2 = 0;
     gameP->mode3 = 0;
