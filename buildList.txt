@@ -22,6 +22,7 @@ american, exe , 0x80020cf4 , 0x0 , src/stateReset.c
 
 american NORELOAD , bin , 0x80105000 , 0x14 * 8 + 4, src/size.c
 american NORELOAD , bin , 0x80105000 , 0x12 * 8 + 4, src/size2.c
+american NORELOAD , bin , 0x80105000 , 0x16 * 8 + 4, src/size3.c
 
 american NORELOAD , ST0D_OVL , 0x800f536c , 0 , src/stageSelectTable.c
 american NORELOAD , ST0D_OVL , 0x800f111c , 0 , src/selectRoute.c
@@ -52,11 +53,18 @@ american, exe , 0x80070ee4 , 0x0 , src/titleTable.c
 american, exe , 0x8001e2e4 , 0x0 , src/title.c
 american NORELOAD, ST0E_OVL , 0x800eebc0 , 0x0 , src/titleTextSpec.c 
 american NORELOAD, ST0E_OVL , 0x800eea40 , 0x0 , src/titleTextObject.c
+american NORELOAD, ST0E_OVL , 0x800ef1b8 , 0x0 , src/titleExtra.c
+
+american NORELOAD , ST0B_4_OVL , 0x800fa398 , 0x0 , src/enigmaCutscene.c
+american NORELOAD , ST0B_4_OVL , 0x800fa180 , 0x0 , src/enigma.c
 
 american , exe , 0x800287f0 , 0x0 , src/loadLayout.c
 
 american NORELOAD , ST0C_OVL , 0x800f6b30 , 0x0 , src/sigmaHook.s
 american NORELOAD , ST0C_OVL , 0x800f6c30 , 0x0 , src/sigmaHook2.s
+
+
+//american , exe , 0x80021124 , 0x0 , src/extra.c
 
 //State overlays
 american, ST0C_OVL , 0x800F80F8 , 0x0 , src/state3.c

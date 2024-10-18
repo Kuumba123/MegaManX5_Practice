@@ -4,6 +4,8 @@ clutPointer = 0x1F800028;
 
 enemyDataPointers = 0x80072eac;
 
+EnigmaShotSucseed = 0x800fa004;
+
 title = 0x800d1f28;
 
 loadState = 0x8009811c;

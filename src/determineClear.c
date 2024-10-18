@@ -169,7 +169,3 @@ void MemoryCopy(void *dest, const void *src, size_t size)
         d[i] = s[i];
     }
 }
-void ShowPracticeTitleText()
-{
-    DrawDebugText(9, 15, 0, "Practice Hack BETA3\n\t\tBy Kuumba");
-}

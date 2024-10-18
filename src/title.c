@@ -14,15 +14,15 @@ static struct Title
     int16_t timer;
 };
 
-void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
-
-void ShowPracticeTitleText();
-
 void ResetGameSettings();
+
+void ST0E_SetObjectVisability(bool vis);
+void ST0E_DetermineMusic(struct Title *titleP);
+
+void TitleManip(struct Title *titleP);
 
 void TitleLoop(struct Title *titleP)
 {
-    ShowPracticeTitleText();
     practice.skipRefights = 0;
     if (fadeDirection == 0)
     {
@@ -36,10 +36,6 @@ void TitleLoop(struct Title *titleP)
             else
             {
                 Cursor--;
-                if (Cursor == 1)
-                {
-                    Cursor = 0;
-                }
             }
         }
 
@@ -51,18 +47,11 @@ void TitleLoop(struct Title *titleP)
             {
                 Cursor = 0;
             }
-            else if (Cursor == 1)
-            {
-                Cursor = 2;
-            }
         }
 
         if ((buttonsPressed & (PAD_START + PAD_CROSS)) != 0)
         {
-            PlaySound(0, 0x22, 0);
-            FadeOut(8);
-            EndSong();
-            titleP->mode2 = 2;
+            ST0E_DetermineMusic(titleP);
         }
 
         if (buttonsPressed == 0)
@@ -96,12 +85,16 @@ void TitleScreen_6_2(struct Title *titleP)
     }
     selected = titleP->mode3;
 
-    if (selected == 2)  //OPTION
+    if (selected == 2) // OPTION
     {
         titleP->mode = 8;
         titleP->mode2 = 0;
         titleP->mode3 = 0;
         titleP->mode4 = 0;
+    }
+    else if (selected == 1) // MANIP (CONTINUE)
+    {
+        TitleManip(titleP);
     }
     else
     {
@@ -115,7 +108,7 @@ void TitleScreen_6_2(struct Title *titleP)
             game.stageSelectMode = 10;
             practice.skipRefights = 0;
         }
-        
+
         NewThread(1, 0x80020904);
         DeleteThread();
     }
@@ -126,10 +119,11 @@ void DetermineTitleOption()
     if (game.stageSelectMode == 10)
     {
         LoadLevel();
-    }else{
-        game.mode = 3; //Stage Select
+    }
+    else
+    {
+        game.mode = 3; // Stage Select
         game.stageSelectMode = 10;
     }
-    
 }
 #undef Cursor
