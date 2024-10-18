@@ -62,7 +62,9 @@ american , exe , 0x800287f0 , 0x0 , src/loadLayout.c
 
 american NORELOAD , ST0C_OVL , 0x800f6b30 , 0x0 , src/sigmaHook.s
 american NORELOAD , ST0C_OVL , 0x800f6c30 , 0x0 , src/sigmaHook2.s
-
+american NORELOAD , SIGMA_OVL , 0x800fbbf0 , 0x0 , src/sigmaText.s
+american NORELOAD , SIGMA2_OVL , 0x800fc488 , 0x0 , src/sigmaText2.s
+american NORELOAD , SIGMA2_OVL , 0x800fc644 , 0x0 , src/sigmaText3.s
 
 //american , exe , 0x80021124 , 0x0 , src/extra.c
 
