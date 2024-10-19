@@ -59,7 +59,7 @@ uint8_t maverickRefightBssSizes[] = {
 
 
 void *stageBssAddresses[] = {
-    0,0, //ST00
+    0x800fb694,0, //ST00
     0x800FDA98,0, //ST01
     0,0x800FA23C, //ST02
     0x80102FD4,0, //ST03
@@ -70,7 +70,7 @@ void *stageBssAddresses[] = {
     0x800FA054,0, //ST08
     0,0, //ST09
     0,0, //ST0A
-    0,0, //ST10
+    0x800FA680,0, //ST10
     0,0, //ST11
     0x800FEA1C,0, //ST12
     0,0,
@@ -80,7 +80,7 @@ void *stageBssAddresses[] = {
 };
 
 uint8_t *stageBssSizes[] = {
-    0,0, //ST00
+    0x08,0, //ST00
     0x18,0, //ST01
     0,0x18, //ST02
     0xC8,0, //ST03
@@ -91,7 +91,7 @@ uint8_t *stageBssSizes[] = {
     0x14,0, //ST08
     0,0, //ST09
     0,0, //ST0A
-    0,0, //ST10
+    0x04,0, //ST10
     0,0, //ST11
     0x40,0, //ST12
     0,0,

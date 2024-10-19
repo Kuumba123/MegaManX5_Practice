@@ -38,6 +38,8 @@ static RECT rect = {0, 500, 256, 12};
 void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
 void DrawLoadText();
 
+void SwapWeaponTexturesClut(Mega *megaP);
+
 void MemoryCopy(void *dest, const void *src, size_t size);
 
 void SaveQuadObjects();
@@ -262,14 +264,6 @@ void LoadState()
                 DrawLoad(0, 0);
                 freeArcP = backup;
             }
-            else if(practice.state.sigmaOvl == 2)
-            {
-                LoadSigmaOverlay(0x27);
-                FileCollect2();
-                ArcSeek(0x89, 4, *(int *)0x8009a758);
-                DrawLoad(0, 0);
-                freeArcP = backup;
-            }
         }
     }
     else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0)
@@ -285,6 +279,11 @@ void LoadState()
     *(uint32_t*)0x80091D54 = 1;
     mega.newAnimeF = -1;
     LoadCompressedImage((Object *)&mega, 320, 0);
+    if (mega.player == 0)
+    {
+        SwapWeaponTexturesClut(&mega);
+    }
+    
     MemoryCopy(*(uint32_t *)0x1F800008, *(uint32_t *)0x800A51A0, practice.state.screenSize);
 }
 

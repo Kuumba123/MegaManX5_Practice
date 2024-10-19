@@ -16,6 +16,7 @@ LoadBackupScreens = 0x80017668;
 ResetGameSettings = 0x8002cf20;
 
 StageLayoutPointers = 0x8007755C;
+SwapWeaponTexturesClut = 0x8003df20;
 
 LevelMidTable = 0x800710f0;
 CreateTitleScreenThread = 0x8001e6ac;
