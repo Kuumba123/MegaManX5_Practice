@@ -26,6 +26,9 @@ typedef struct{
     uint8_t route;
     bool keepRng;
     uint8_t skipRefights;
+    bool ultimateArmor;
+    bool cancelXA;
+    bool analog;
 }Practice;
 
 Practice practice;

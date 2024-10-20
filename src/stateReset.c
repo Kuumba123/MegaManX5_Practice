@@ -19,7 +19,7 @@ void GameModeLoad(Game *gameP)
 
     for (size_t i = 0; i < 64; i++)
     {
-        gameP->speenTextBoxes[0][i] = 0;
+        gameP->seenTextBoxes[0][i] = 0;
     }
 
     ResetState();
