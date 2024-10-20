@@ -75,10 +75,10 @@ void AssignWeapons() //2 routes: All Stages & Any%
         game.ranks[game.player] = maverickRankTable[game.stageId - 1];
     }else if (game.stageId == 0xC) //Final Level
     {
+        game.armors = 0x10;
         if (practice.route == 0)
         {
             game.clearedStages = 0xFF;
-            game.armors = 0x10;
             if (practice.ultimateArmor)
             {
                 game.player = 0;
@@ -93,16 +93,20 @@ void AssignWeapons() //2 routes: All Stages & Any%
         game.clearedStages = dynamoMaverickClearedTable[game.stageId - 9];
         game.equipedParts[5] = dynamoPartsTable[game.stageId - 9];
     }else { //other sigma stages
-        game.clearedStages = 0x7F;
-        game.player = 1;
 
-        if (practice.ultimateArmor && game.stageId == 0x12)
+        if (practice.route == 0)
+        {
+            game.clearedStages = 0x7F;
+        }
+        
+        if (practice.ultimateArmor && game.stageId == 0x12 && practice.route != 0)
         {
             game.player = 0;
             game.armorType = 0;
         }
     }
-    if ((game.clearedStages & 1) != 0)
+
+    if ((game.clearedStages & 1) != 0) //give Sub-Tank some ammo
     {
         game.collectables = 0x1000;
         game.tanksAmmo[0] = 12;
