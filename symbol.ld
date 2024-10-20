@@ -20,3 +20,13 @@ SwapWeaponTexturesClut = 0x8003df20;
 
 LevelMidTable = 0x800710f0;
 CreateTitleScreenThread = 0x8001e6ac;
+
+
+/*libpad.lib*/
+PadSetAct = 0x8006ccb8;
+PadSetActAlign = 0x8006ccf8;
+PadInfoMode = 0x8006cf38;
+PadGetState = 0x8006ce68;
+
+controller = 0x800d51a0;
+controller2 = 0x800d50f0;
