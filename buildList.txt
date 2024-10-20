@@ -67,9 +67,11 @@ american NORELOAD , SIGMA_OVL , 0x800fbbf0 , 0x0 , src/sigmaText.s
 american NORELOAD , SIGMA2_OVL , 0x800fc488 , 0x0 , src/sigmaText2.s
 american NORELOAD , SIGMA2_OVL , 0x800fc644 , 0x0 , src/sigmaText3.s
 
+american , exe , 0x8001ea30 , 0x0 , src/textureFixHook.s
+
 american , exe , 0x8001255c , 0x0 , src/analog.c
 
-//american , exe , 0x80021124 , 0x0 , src/extra.c
+american , exe , 0x80021124 , 0x0 , src/extra.c
 
 //State overlays
 american NORELOAD, ST0C_OVL , 0x800F80F8 , 0x0 , src/state3.c
