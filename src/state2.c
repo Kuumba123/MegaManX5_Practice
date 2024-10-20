@@ -33,6 +33,7 @@ void *readAddress[] = {
     0x800D50DC, // More Brightness stuff
     0x8009A42C, // Also More Brightness stuff
     0x80093dd0, // Brightness Table thing
+    0x8009A2F8  // After Images
 };
 
 void *maverickRefightBssAddresses[] = {
@@ -132,6 +133,7 @@ int16_t addressesSize[] = {
     4,      // More Brightness stuff
     4,      // Also More Brightness stuff
     0x28,   // Brightness Table thing
+    0x120   // After Images
 };
 
 static RECT rect = {0, 500, 256, 12};

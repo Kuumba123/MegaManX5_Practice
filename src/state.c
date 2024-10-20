@@ -8,7 +8,7 @@
  *   Being stored at the end of MOBJPAT.ARC (0x99C bytes free)
  */
 
-#define VariableSetsCount 20
+#define VariableSetsCount 21
 #define BuffersCount 8
 
 extern uint32_t swapTextureFlag;
