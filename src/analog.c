@@ -2,8 +2,6 @@
 #include <libpad.h>
 #include "practice.h"
 
-#define SENSITIVITY 32
-
 typedef struct
 {
     uint8_t status;
@@ -62,18 +60,18 @@ void ReadPad(void)
             
         }else if (bVar4 == 0x70 && practice.analog) //Analog
         {
-            if (controller.analog2 >= (SENSITIVITY + 0x80))
+            if (controller.analog2 >= (practice.sensativity + 0x80))
             {
                 uVar7 |= PAD_RIGHT;
-            }else if (controller.analog2 <= (0x80 - SENSITIVITY))
+            }else if (controller.analog2 <= (0x80 - practice.sensativity))
             {
                 uVar7 |= PAD_LEFT;
             }
             
-            if (controller.analog3 >= (SENSITIVITY + 0x80))
+            if (controller.analog3 >= (practice.sensativity + 0x80))
             {
                 uVar7 |= PAD_DOWN;
-            }else if (controller.analog3 <= (0x80 - SENSITIVITY))
+            }else if (controller.analog3 <= (0x80 - practice.sensativity))
             {
                 uVar7 |= PAD_UP;
             }

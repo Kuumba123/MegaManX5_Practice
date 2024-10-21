@@ -8,30 +8,32 @@
 
 void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
 
-
-static const char * stageNames[] = {"SIGMA 1" , "SIGMA 2", "SIGMA 3" , "SIGMA 4", "Intro" , "Dynamo-1","Dynamo-2"};
-static const char * finalStageText[] = {"Start","POST-Refights"};
-static const char * halfText[] = {"Start","Mid"};
+static const char *stageNames[] = {"SIGMA 1", "SIGMA 2", "SIGMA 3", "SIGMA 4", "Intro", "Dynamo-1", "Dynamo-2"};
+static const char *finalStageText[] = {"Start", "POST-Refights"};
+static const char *halfText[] = {"Start", "Mid"};
 
 #define Cursor gameP->refights[2]
 
-void DrawSelectableStages(Game * gameP)
+void DrawSelectableStages(Game *gameP)
 {
     if (gameP->mode4 == 0)
     {
-        DrawDebugText(12,18,2, stageNames[Cursor]);
-    }else{
+        DrawDebugText(12, 18, 2, stageNames[Cursor]);
+    }
+    else
+    {
         if (gameP->stageId == 0xC)
         {
-            DrawDebugText(12,18,2, finalStageText[Cursor]);
-        }else{
-            DrawDebugText(12,18,2, halfText[Cursor]);
+            DrawDebugText(12, 18, 2, finalStageText[Cursor]);
+        }
+        else
+        {
+            DrawDebugText(12, 18, 2, halfText[Cursor]);
         }
     }
-    
 }
 
-void ProcessStagePicker(Game * gameP)
+void ProcessStagePicker(Game *gameP)
 {
     if ((buttonsPressed & PAD_LEFT) != 0)
     {
@@ -52,27 +54,67 @@ void ProcessStagePicker(Game * gameP)
         {
             Cursor = 0;
         }
-    }else{
+    }
+    else
+    {
         Cursor &= 1;
     }
 }
 
 #undef Cursor
 
-static const char* routeText[] = {"ALL STAGES","ANY%"};
+#define Cursor gameP->mode4
+
+void ProcessConfigPicker(Game *gameP)
+{
+    uint8_t amount;
+    if ((buttonsHeld & (PAD_L2 + PAD_R2)) != 0)
+    {
+        amount = 10;
+    }
+    else
+    {
+        amount = 1;
+    }
+
+    if ((buttonsPressed & PAD_RIGHT) != 0)
+    {
+        practice.sensativity += amount;
+    }
+    else if ((buttonsPressed & PAD_LEFT) != 0)
+    {
+        practice.sensativity -= amount;
+    }
+
+    if (practice.sensativity > MAX_SENSITIVITY)
+    {
+        practice.sensativity = MAX_SENSITIVITY;
+    }
+    else if (practice.sensativity < MIN_SENSITIVITY)
+    {
+        practice.sensativity = MIN_SENSITIVITY;
+    }
+}
+
+#undef Cursor
+
+static const char *routeText[] = {"ALL STAGES", "ANY%"};
 
 void DrawRoutePage()
 {
     if (practice.cancelXA == 0)
     {
-        *((int8_t*)0x80017878) = 0x73;
-    }else{
-        *((int8_t*)0x80017878) = 0x00;
+        *((int8_t *)0x80017878) = 0x73;
     }
-    
-    DrawDebugText(3,4 + game.mode4,1,">");
-    DrawDebugText(4,4,0,"ROUTE\nKEEP RNG\nUA-Refights\nCancel XA\nAnalog");
+    else
+    {
+        *((int8_t *)0x80017878) = 0x00;
+    }
+    DrawDebugText(8, 22, 1, "Press Select to\nReturn to Title Screen");
 
+    DrawDebugText(3, 4 + game.mode4, 1, ">");
+    DrawDebugText(4, 4, 0, "ROUTE\nKEEP RNG\nUA-Refights\nCancel XA\nAnalog\nSensitivity");
 
-    DrawDebugText(20,4, 0, "%s\n%d\n%d\n%d\n%d",routeText[practice.route],practice.keepRng,practice.ultimateArmor,practice.cancelXA,practice.analog);
+    DrawDebugText(20, 4, 0, "%s\n%d\n%d\n%d\n%d\n%d", routeText[practice.route], practice.keepRng, practice.ultimateArmor, practice.cancelXA, practice.analog, practice.sensativity);
+    ThreadSleep(1);
 }

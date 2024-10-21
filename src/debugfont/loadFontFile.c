@@ -1,4 +1,5 @@
 #include <common.h>
+#include "../practice.h"
 
 #define StartingThread 0x8001e048
 
@@ -22,6 +23,7 @@ void LoadDebugCodeFile()
     {
         LoadFile(&files[i]);
     }
+    practice.sensativity = DEFAULT_SENSITIVITY;
     NewThread(0, StartingThread);
 }
 #undef StartingThread

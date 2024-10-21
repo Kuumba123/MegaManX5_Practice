@@ -3,7 +3,12 @@
 
 #define Cursor gameP->mode4
 
+void CreateTitleScreenThread();
+
 void DrawRoutePage();
+void ExitRoutePage(Game *gameP);
+void ProcessConfigPicker(Game *gameP);
+void ExitStageSelectCheck();
 
 void RoutePage(Game *gameP)
 {
@@ -11,16 +16,13 @@ void RoutePage(Game *gameP)
     {
         if ((buttonsPressed & (PAD_L1 + PAD_R1)) != 0)
         {
-            gameP->mode2 = 4;
-            gameP->mode3 = 0;
-            gameP->mode4 = 0;
-            PlaySound(5,0,0);
+            ExitRoutePage(gameP);
             return;
         }
 
         if ((buttonsPressed & PAD_DOWN) != 0)
         {
-            if (Cursor == 4)
+            if (Cursor == 5)
             {
                 Cursor = 0;
             }
@@ -33,14 +35,13 @@ void RoutePage(Game *gameP)
         {
             if (Cursor == 0)
             {
-                Cursor = 4;
+                Cursor = 5;
             }
             else
             {
                 Cursor -= 1;
             }
         }
-
         bool toggle = (buttonsPressed & (PAD_LEFT + PAD_RIGHT + PAD_CROSS)) != 0;
 
         if (Cursor == 0)
@@ -56,31 +57,34 @@ void RoutePage(Game *gameP)
             {
                 practice.keepRng ^= 1;
             }
-        }else if (Cursor == 2)
+        }
+        else if (Cursor == 2)
         {
             if (toggle)
             {
                 practice.ultimateArmor ^= 1;
             }
-        }else if (Cursor == 3)
+        }
+        else if (Cursor == 3)
         {
             if (toggle)
             {
                 practice.cancelXA ^= 1;
             }
-        }else
+        }
+        else if (Cursor == 4)
         {
             if (toggle)
             {
                 practice.analog ^= 1;
             }
-            
         }
-        
-        
-
+        else
+        {
+            ProcessConfigPicker(gameP);
+        }
         DrawRoutePage();
-        ThreadSleep(1);
+        ExitStageSelectCheck();
     }
 }
 

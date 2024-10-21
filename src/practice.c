@@ -29,6 +29,7 @@ typedef struct{
     bool ultimateArmor;
     bool cancelXA;
     bool analog;
+    uint8_t sensativity;
 }Practice;
 
 Practice practice;

@@ -3,6 +3,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define MAX_SENSITIVITY 127
+#define MIN_SENSITIVITY 16
+#define DEFAULT_SENSITIVITY 32
+
 typedef struct
 {
     uint8_t bss[0xA0];
@@ -31,6 +35,7 @@ typedef struct{
     bool ultimateArmor;
     bool cancelXA;
     bool analog;
+    uint8_t sensativity;
 }Practice;
 
 extern Practice practice;
