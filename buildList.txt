@@ -38,6 +38,7 @@ american NORELOAD , ST0F_OVL , 0x800EE970 , 0x0 , src/missionClear.c
 american NORELOAD , ST00_OVL , 0x800f6d10 , 0x0 , src/stage00_screenFix.c
 american NORELOAD , ST04_OVL , 0x800eeaf0 , 0x0 , src/stage04_textureFix.c
 american NORELOAD , ST04_OVL , 0x800f25a8 , 0x0 , src/stage04_textureFix2.c
+american NORELOAD , ST05_OVL , 0x800f1618 , 0x0 , src/stage05_textureFix.c
 american NORELOAD , ST06_1_OVL , 0x800f9e48 , 0x0 , src/stage06_textureFix.c
 american NORELOAD , ST07_OVL , 0x800eee58 , 0x0 , src/stage07_screenFix.s
 american NORELOAD , ST07_OVL , 0x800fa618 , 0x0 , src/stage07_textureFix.c
