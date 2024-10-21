@@ -19,10 +19,12 @@ void ResetGameSettings();
 void ST0E_SetObjectVisability(bool vis);
 void ST0E_DetermineMusic(struct Title *titleP);
 
+void ShowPracticeTitleText();
 void TitleManip(struct Title *titleP);
 
 void TitleLoop(struct Title *titleP)
 {
+    ShowPracticeTitleText();
     practice.skipRefights = 0;
     if (fadeDirection == 0)
     {
@@ -112,7 +114,6 @@ void TitleScreen_6_2(struct Title *titleP)
         NewThread(1, 0x80020904);
         DeleteThread();
     }
-    return;
 }
 void DetermineTitleOption()
 {

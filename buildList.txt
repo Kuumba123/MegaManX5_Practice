@@ -52,6 +52,7 @@ american , exe , 0x80056768 , 0x0 , src/bossLoadFix2.s
 
 american, exe , 0x80070ee4 , 0x0 , src/titleTable.c
 american, exe , 0x8001e2e4 , 0x0 , src/title.c
+american, exe , 0x80070f38 , 0x0 , src/titleTable2.c
 american NORELOAD, ST0E_OVL , 0x800eebc0 , 0x0 , src/titleTextSpec.c 
 american NORELOAD, ST0E_OVL , 0x800eea40 , 0x0 , src/titleTextObject.c
 american NORELOAD, ST0E_OVL , 0x800ef1b8 , 0x0 , src/titleExtra.c

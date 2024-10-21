@@ -69,12 +69,12 @@ void TitleManip(struct Title *titleP)
 
             game.clearedStages = 9;
 
-            ((uint8_t*)((int)&game))[0xC2] = 1;
-            ((uint8_t*)((int)&game))[0xC3] = 2;
-            ((uint8_t*)((int)&game))[0xC4] = 5;
-            ((uint8_t*)((int)&game))[0xC5] = 3;
+            ((uint8_t *)((int)&game))[0xC2] = 1;
+            ((uint8_t *)((int)&game))[0xC3] = 2;
+            ((uint8_t *)((int)&game))[0xC4] = 5;
+            ((uint8_t *)((int)&game))[0xC5] = 3;
 
-            ((uint8_t*)((int)&game))[0xCA] = 0;
+            ((uint8_t *)((int)&game))[0xCA] = 0;
 
             game.hoursLeft = 2793525;
 
@@ -125,7 +125,11 @@ void TitleManip(struct Title *titleP)
 
     DrawDebugText(BASE_X, BASE_Y, 1, "ENIGMA-SHOT\nDEMO:%d\nPLAY-DEMO", Demo);
 }
-
+void ShowPracticeTitleText()
+{
+    DrawDebugText(10, 15, 0, "Practice\tHack 1.0");
+    DrawDebugText(20, 26, 2, "@PogChampGuy");
+}
 #undef BASE_X
 #undef BASE_Y
 
@@ -141,5 +145,10 @@ void ST0E_DetermineMusic(struct Title *titleP)
 
     titleP->mode2 = 2;
     titleP->mode4 = 0;
+}
+void TitlePressStartHook(struct Title titleP)
+{
+    
+    ShowPracticeTitleText();
 }
 #undef Demo
