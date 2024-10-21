@@ -97,6 +97,7 @@ void TitleScreen_6_2(struct Title *titleP)
     else if (selected == 1) // MANIP (CONTINUE)
     {
         TitleManip(titleP);
+        ShowPracticeTitleText();
     }
     else
     {
