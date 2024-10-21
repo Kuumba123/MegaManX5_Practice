@@ -3,7 +3,7 @@
 
 typedef struct
 {
-    uint8_t bss[0xA0];
+    uint8_t bss[0xC8];
     uint32_t textureFlag;
     void * arcP;
     void * backupArcP;

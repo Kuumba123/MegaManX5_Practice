@@ -1,7 +1,7 @@
 // version, section, address, offset, path, binary name [optional]
 american, exe , 0x80020fa0 , 0x0 , src/debugfont/loadFontFile.c
 american, exe , 0x80014d00 , 0x0 , src/debugfont/loadFile.c
-american, FONT, 0x801030a0 , 0x0 , src/debugfont/font.c , FONT.BIN
+american, FONT, 0x801030a0 , 0x0 , src/debugfont/font.c src/practice.c, FONT.BIN
 american, exe , 0x80012534 , 0x0 , src/debugfont/loadFont.s
 american, exe , 0x80013bbc , 0x0 , src/debugfont/loadFont2.s
 american, exe , 0x80011f84 , 0x0 , src/debugfont/fontFlushHook.s
@@ -76,5 +76,5 @@ american , exe , 0x80021124 , 0x0 , src/extra.c
 
 //State overlays
 american NORELOAD, ST0C_OVL , 0x800F80F8 , 0x0 , src/state3.c
-american, STATE , 0x8009a430 , 0x0 , src/state2.c src/practice.c , STATE2.BIN
+american, STATE , 0x8009a430 , 0x0 , src/state2.c , STATE2.BIN
 american, STATE , 0x801F5664 , 0x0 , src/state.c, STATE.BIN
