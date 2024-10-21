@@ -3,6 +3,7 @@
 
 void MissionCleared(Game *gameP)
 {
+    gameP->stageSelectMode = 10;
     if (gameP->exitType == 2)
     {
         if (gameP->slowMotion == 0x16)
