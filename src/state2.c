@@ -69,15 +69,16 @@ void *stageBssAddresses[] = {
     0,0x800FB618, //ST06
     0x800FC1C4,0, //ST07
     0x800FA054,0, //ST08
-    0,0, //ST09
-    0,0, //ST0A
+    0x800f2100,0, //ST09
+    0x800f20a4,0, //ST0A
+    0,0,          //ST0B
+    0,0,          //ST0C
+    0,0,          //ST0D
+    0,0,          //ST0E
+    0,0,          //ST0F
     0x800FA680,0, //ST10
-    0,0, //ST11
-    0x800FEA1C,0, //ST12
-    0,0,
-    0,0,
-    0,0,
-    0,0 //ST016
+    0,0,          //ST11
+    0x800FEA1C,0  //ST12
 };
 
 uint8_t *stageBssSizes[] = {
@@ -90,15 +91,16 @@ uint8_t *stageBssSizes[] = {
     0,0x6C, //ST06
     0x08,0, //ST07
     0x14,0, //ST08
-    0,0, //ST09
-    0,0, //ST0A
+    0x04,0, //ST09
+    0x04,0, //ST0A
+    0,0,    //ST0B
+    0,0,    //ST0C
+    0,0,    //ST0D
+    0,0,    //ST0E
+    0,0,    //ST0F
     0x04,0, //ST10
     0,0, //ST11
-    0x40,0, //ST12
-    0,0,
-    0,0,
-    0,0,
-    0,0 //ST016
+    0x40,0 //ST12
 };
 
 int16_t freeAddressSizes[] = {

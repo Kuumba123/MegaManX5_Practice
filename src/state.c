@@ -143,7 +143,7 @@ void SaveState()
     {
         MemoryCopy(&practice.state.bss, maverickRefightBssAddresses[game.point - 2], maverickRefightBssSizes[game.point - 2]);
     }
-    else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0)
+    else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0 && game.stageId < 0x13)
     {
         MemoryCopy(&practice.state.bss, stageBssAddresses[game.stageId * 2 + game.mid], stageBssSizes[game.stageId * 2 + game.mid]);
     }
@@ -266,7 +266,7 @@ void LoadState()
             }
         }
     }
-    else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0)
+    else if (stageBssAddresses[game.stageId * 2 + game.mid] != 0 && game.stageId < 0x13)
     {
         MemoryCopy(stageBssAddresses[game.stageId * 2 + game.mid], &practice.state.bss, stageBssSizes[game.stageId * 2 + game.mid]);
     }
