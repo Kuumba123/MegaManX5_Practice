@@ -146,9 +146,14 @@ void ST0E_DetermineMusic(struct Title *titleP)
     titleP->mode2 = 2;
     titleP->mode4 = 0;
 }
-void TitlePressStartHook(struct Title titleP)
+void TitlePressStartHook(struct Title *titleP)
 {
-    
+    titleP->timer -= 1;
+    if (titleP->timer == 1)
+    {
+        titleP->mode2 = 4;
+        FadeOut(8);
+    }
     ShowPracticeTitleText();
 }
 #undef Demo
