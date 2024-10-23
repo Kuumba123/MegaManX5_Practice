@@ -44,6 +44,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
     game.ranks[0] = 5;
     game.ranks[1] = 3;
     game.hoursLeft = 3456000;
+    game.zeroBuster = true;
 
     for (size_t i = 0; i < 6; i++)
     {
