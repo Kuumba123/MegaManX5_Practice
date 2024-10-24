@@ -129,7 +129,6 @@ void SaveState()
 
     practice.state.textureFlag = swapTextureFlag;
     practice.state.pastBright = *(uint8_t *)0x800A51A6;
-    practice.state.songSeekFlag = *(uint8_t *)0x800d1f3c;
     practice.state.arcP = freeArcP;
     practice.state.backupArcP = *(int *)0x800e95a4;
     practice.state.reloadFlag = *(uint8_t *)0x800d1598;
@@ -210,14 +209,11 @@ void LoadState()
     practice.page = practice.state.page;
     swapTextureFlag = practice.state.textureFlag;
     *(uint8_t *)0x800A51A6 = practice.state.pastBright;
-    if (*(int8_t *)0x800e8060 != 0)
+    if (game.startingSong != 0)
     {
-        *(uint8_t *)0x800d1f3c = practice.state.songSeekFlag;
+        EndSong();
     }
-    else
-    {
-        *(uint8_t *)0x800d1f3c = 0;
-    }
+    
 
     freeArcP = practice.state.arcP;
     void *backup = practice.state.backupArcP;
@@ -302,7 +298,7 @@ void StateCheck(Game *gameP)
         DrawLoadText();
     }
 
-    if (loadState != 1 && *(uint16_t *)0x801F8200 /*<-Fade In/Out Thread*/ == 0)
+    if (loadState != 1 && *(uint16_t *)0x801F8200 /*<-Fade In/Out Thread*/ == 0 && *(bool*)0x8009a418 /*<-Turn Song Off flag*/ == false)
     {
         if ((buttonsPressed & (PAD_L2 | PAD_R2 | PAD_SELECT)) != 0)
         {

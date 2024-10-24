@@ -12,7 +12,6 @@ typedef struct
     uint16_t rng;
     uint8_t sigmaOvl;
     uint8_t pastBright;
-    uint8_t songSeekFlag;
     uint8_t reloadFlag;
     uint8_t page;
     bool made;

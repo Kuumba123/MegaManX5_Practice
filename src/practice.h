@@ -18,7 +18,7 @@ typedef struct
     uint16_t rng;
     uint8_t sigmaOvl;
     uint8_t pastBright;
-    uint8_t songSeekFlag;
+    uint8_t bossSongFlag;
     uint8_t reloadFlag;
     uint8_t page;
     bool made;
@@ -29,6 +29,7 @@ typedef struct{
     State state;
     uint8_t page;
     uint8_t sigmaOvl;
+    uint8_t bossSongFlag;
     uint8_t route;
     bool keepRng;
     uint8_t skipRefights;

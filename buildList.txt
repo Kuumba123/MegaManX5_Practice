@@ -45,8 +45,7 @@ american NORELOAD , ST07_OVL , 0x800fa618 , 0x0 , src/stage07_textureFix.c
 
 american , exe , 0x800204b4 , 0x0 , src/backupScreenHook.s
 
-american , exe , 0x80056740 , 0x0 , src/bossLoadFix.s
-american , exe , 0x80056768 , 0x0 , src/bossLoadFix2.s
+american , exe , 0x80044dd8 , 0x0 , src/stopSongHook.s
 
 
 american, exe , 0x80070ee4 , 0x0 , src/titleTable.c
