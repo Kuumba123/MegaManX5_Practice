@@ -1,5 +1,8 @@
 #include <common.h>
 #include <gpu.h>
+#include "practice.h"
+
+extern uint32_t swapTextureFlag;
 
 void *freeAddress[] = {
     -1,         // End of Clut (dynamicly set based off of CLUT Pointer)
@@ -147,4 +150,12 @@ void SaveQuadObjects()
 void RestoreQuadObjects()
 {
     StoreImage2(&rect, 0x8009F9A0);
+}
+
+void SwappedTextureCheck()
+{
+    if (practice.page == 0)
+    {
+        swapTextureFlag = 1;
+    }
 }

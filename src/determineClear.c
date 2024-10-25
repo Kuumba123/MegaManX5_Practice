@@ -130,13 +130,6 @@ void DrawLoadText()
 {
     DrawDebugText(4, 4, 2, "(Loading)");
 }
-void SwappedTextureCheck()
-{
-    if (swapTextureFlag == 0)
-    {
-        swapTextureFlag = 1;
-    }
-}
 void ResetState()
 {
     practice.state.made = false;
