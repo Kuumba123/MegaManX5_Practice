@@ -43,6 +43,8 @@ american NORELOAD , ST06_1_OVL , 0x800f9e48 , 0x0 , src/stage06_textureFix.c
 american NORELOAD , ST07_OVL , 0x800eee58 , 0x0 , src/stage07_screenFix.s
 american NORELOAD , ST07_OVL , 0x800fa618 , 0x0 , src/stage07_textureFix.c
 
+american , exe , 0x80056070 , 0x0 , src/textureSwapCheckHook.s
+
 american , exe , 0x800204b4 , 0x0 , src/backupScreenHook.s
 
 american , exe , 0x80044dd8 , 0x0 , src/stopSongHook.s

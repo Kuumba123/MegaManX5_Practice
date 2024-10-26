@@ -1,5 +1,6 @@
 #include <common.h>
 #include <gpu.h>
+#include <object.h>
 #include "practice.h"
 
 extern uint32_t swapTextureFlag;
@@ -158,4 +159,20 @@ void SwappedTextureCheck()
     {
         swapTextureFlag = 1;
     }
+}
+void RoseTextureCheck(Object *objP)
+{
+    if (game.stageId == 7 && objP->stageVar == 0x85)
+    {
+        if (practice.page == 0)
+        {
+            swapTextureFlag = 1;
+        }
+        DeleteObject3(objP);
+    }else
+    {
+        swapTextureFlag = 1;
+        DeleteObject3(objP);
+    }
+    
 }
