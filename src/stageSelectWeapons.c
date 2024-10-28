@@ -2,7 +2,7 @@
 #include "practice.h"
 
 static uint8_t mavericksClearedTable[8] =
-    {8, 0x4D, 9, 0, 0x5F, 0x4F, 0xD, 0x7F};
+    {8, 0x4D, 9, 0, 0x6F, 0x4F, 0xD, 0x7F};
 static uint8_t mavericksHoursTable[8] =
     {14, 9, 11, 15, 5, 8, 10, 2};
 static uint8_t maverickHealthTable[8] =
