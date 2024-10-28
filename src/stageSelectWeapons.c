@@ -16,7 +16,7 @@ static uint32_t maverickPartsTable[8] =
 static uint8_t dynamoHoursTable[2] =
     {13, 7};
 static uint8_t dynamoMaverickClearedTable[2] =
-    {9, 0x5F};
+    {9, 0x6F};
 static uint32_t dynamoPartsTable[2] =
     {0, 0x4030};
 static uint8_t dynamoStageSelectModeTable[2] =
@@ -28,7 +28,7 @@ static uint8_t dynamoAmmoTable[2] =
 static uint8_t sigmaHoursTable[3] =
     {6, 4, 3};
 static uint8_t sigmaMaverickClearedTable[3] =
-    {0x5F, 0x7F, 0x7F};
+    {0x6F, 0x7F, 0x7F};
 static uint32_t sigmaPartsTable[3] =
     {0x4030, 0x4030, 0x4030};
 static uint8_t sigmaHealthTable[3] =
