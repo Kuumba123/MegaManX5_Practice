@@ -46,7 +46,6 @@ extern uint8_t maverickRefightBssSizes[];
 extern void *stageBssAddresses[];
 extern uint8_t *stageBssSizes[];
 
-static RECT rect = {0, 500, 256, 12};
 
 void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
 void DrawLoadText();
@@ -121,7 +120,7 @@ void SaveState()
 
             if (freeId > BuffersCount - 1)
             {
-                // printf("ERROR: went past MAX buffer counts: %X\n", BuffersCount); //need to comment out to save space
+                printf("ERROR: went past MAX buffer counts: %X\n", BuffersCount);
                 return;
             }
 
@@ -143,7 +142,6 @@ void SaveState()
     practice.state.textureFlag = swapTextureFlag;
     practice.state.pastBright = PASTBRIGHT;
     practice.state.arcP = freeArcP;
-    practice.state.backupArcP = *(int *)0x800e95a4;
     practice.state.reloadFlag = RELOAD;
     practice.state.page = practice.page;
     practice.state.rng = RNG;
@@ -229,8 +227,6 @@ void LoadState()
     
 
     freeArcP = practice.state.arcP;
-    void *backup = practice.state.backupArcP;
-    *(int *)0x800e95a4 = practice.state.backupArcP;
     RELOAD = practice.state.reloadFlag;
     if (practice.keepRng)
     {
@@ -331,3 +327,16 @@ void StateCheck(Game *gameP)
     }
     mode_A_Table[gameP->mode2](gameP);
 }
+
+#undef RNG
+#undef RELOAD
+#undef PASTBRIGHT
+#undef UPDATECLUT
+#undef STARTSELECT_FLAG
+#undef SCREENBACKUP
+#undef VABP
+
+#undef FADE_F
+#undef SONG_F
+
+#undef DECOMPRESS_ADDR
