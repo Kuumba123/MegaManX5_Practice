@@ -20,7 +20,6 @@
 #define VABP *(int *)0x8009a758
 
 #define FADE_F *(uint16_t *)0x801F8200
-#define SONG_F *(bool*)0x8009a418
 
 #define DECOMPRESS_ADDR 0x800CD598
 
@@ -311,7 +310,7 @@ void StateCheck(Game *gameP)
         DrawLoadText();
     }
 
-    if (loadState != 1 && FADE_F == 0 && SONG_F == false)
+    if (loadState != 1 && FADE_F == 0)
     {
         if ((buttonsPressed & (PAD_L2 | PAD_R2 | PAD_SELECT)) != 0)
         {
@@ -337,6 +336,5 @@ void StateCheck(Game *gameP)
 #undef VABP
 
 #undef FADE_F
-#undef SONG_F
 
 #undef DECOMPRESS_ADDR
