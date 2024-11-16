@@ -31,6 +31,7 @@ american NORELOAD , ST0D_OVL , 0x800f0ed8 , 0x0 , src/stageSelectDisableMisc.c
 american NORELOAD , ST0D_OVL , 0x800f101c , 0x0 , src/skipMaverick.c
 american NORELOAD , ST0D_OVL , 0x800f03c4 , 0x0 , src/stageSelectWeapons.c
 
+american , exe , 0x80020bf4 , 0x0 , src/missionClearLoad.c
 american , exe , 0x800710bc , 0x0 , src/missionClearTable.c
 american NORELOAD , ST0F_OVL , 0x800EE970 , 0x0 , src/missionClear.c
 
