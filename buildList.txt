@@ -7,7 +7,6 @@ american, exe , 0x80013bbc , 0x0 , src/debugfont/loadFont2.s
 american, exe , 0x80011f84 , 0x0 , src/debugfont/fontFlushHook.s
 
 american, exe , 0x800289d8 , 0x0 , src/swapTexture.c
-american, exe , 0x80011f9c , 0x0 , src/swapTextureHook.s
 
 american, exe , 0x800710e4 , 0x0 , src/modeTable.c
 
