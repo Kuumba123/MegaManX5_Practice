@@ -35,6 +35,22 @@ void DrawSelectableStages(Game *gameP)
 
 #undef Cursor
 
+void ExitRoutePage(Game *gameP)
+{
+    gameP->mode2 = 4;
+    gameP->mode3 = 0;
+    gameP->mode4 = 0;
+    PlaySound(5, 0, 0);
+}
+void ExitStageSelectCheck()
+{
+    if ((buttonsPressed & PAD_SELECT) != 0)
+    {
+        CreateTitleScreenThread();
+        DeleteThread();
+    }
+}
+
 static const char *routeText[] = {"ALL STAGES", "ANY%", "100%", "Custom"};
 
 void DrawRoutePage()

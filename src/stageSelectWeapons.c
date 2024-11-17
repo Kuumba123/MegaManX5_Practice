@@ -150,19 +150,3 @@ void AssignWeapons() // 2 routes: All Stages & Any%
     }
     game.equipedParts[game.armorType] = parts;
 }
-
-void ExitRoutePage(Game *gameP)
-{
-    gameP->mode2 = 4;
-    gameP->mode3 = 0;
-    gameP->mode4 = 0;
-    PlaySound(5, 0, 0);
-}
-void ExitStageSelectCheck()
-{
-    if ((buttonsPressed & PAD_SELECT) != 0)
-    {
-        CreateTitleScreenThread();
-        DeleteThread();
-    }
-}
