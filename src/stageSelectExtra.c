@@ -33,72 +33,9 @@ void DrawSelectableStages(Game *gameP)
     }
 }
 
-void ProcessStagePicker(Game *gameP)
-{
-    if ((buttonsPressed & PAD_LEFT) != 0)
-    {
-        Cursor -= 1;
-    }
-    else if ((buttonsPressed & PAD_RIGHT) != 0)
-    {
-        Cursor += 1;
-    }
-
-    if (gameP->mode4 == 0)
-    {
-        if ((int8_t)Cursor < 0)
-        {
-            Cursor = 6;
-        }
-        else if (Cursor >= 7)
-        {
-            Cursor = 0;
-        }
-    }
-    else
-    {
-        Cursor &= 1;
-    }
-}
-
 #undef Cursor
 
-#define Cursor gameP->mode4
-
-void ProcessConfigPicker(Game *gameP)
-{
-    uint8_t amount;
-    if ((buttonsHeld & (PAD_L2 + PAD_R2)) != 0)
-    {
-        amount = 10;
-    }
-    else
-    {
-        amount = 1;
-    }
-
-    if ((buttonsPressed & PAD_RIGHT) != 0)
-    {
-        practice.sensativity += amount;
-    }
-    else if ((buttonsPressed & PAD_LEFT) != 0)
-    {
-        practice.sensativity -= amount;
-    }
-
-    if (practice.sensativity > MAX_SENSITIVITY)
-    {
-        practice.sensativity = MAX_SENSITIVITY;
-    }
-    else if (practice.sensativity < MIN_SENSITIVITY)
-    {
-        practice.sensativity = MIN_SENSITIVITY;
-    }
-}
-
-#undef Cursor
-
-static const char *routeText[] = {"ALL STAGES", "ANY%"};
+static const char *routeText[] = {"ALL STAGES", "ANY%", "100%", "Custom"};
 
 void DrawRoutePage()
 {
@@ -110,11 +47,11 @@ void DrawRoutePage()
     {
         *((int8_t *)0x80017878) = 0x00;
     }
-    DrawDebugText(8, 22, 1, "Press Select to\nReturn to Title Screen");
+    DrawDebugText(9, 22, 1, "Press Select to\nReturn to Title Screen");
+    DrawDebugText(12,4,2,"CONFIG PAGE");
+    DrawDebugText(3, 6 + game.mode4, 1, ">");
+    DrawDebugText(4, 6, 0, "ROUTE\nKEEP RNG\nUA-Refights\nCancel XA\nAnalog\nSensitivity");
 
-    DrawDebugText(3, 4 + game.mode4, 1, ">");
-    DrawDebugText(4, 4, 0, "ROUTE\nKEEP RNG\nUA-Refights\nCancel XA\nAnalog\nSensitivity");
-
-    DrawDebugText(20, 4, 0, "%s\n%d\n%d\n%d\n%d\n%d", routeText[practice.route], practice.keepRng, practice.ultimateArmor, practice.cancelXA, practice.analog, practice.sensativity);
+    DrawDebugText(20, 6, 0, "%s\n%d\n%d\n%d\n%d\n%d", routeText[practice.route], practice.keepRng, practice.ultimateArmor, practice.cancelXA, practice.analog, practice.sensativity);
     ThreadSleep(1);
 }

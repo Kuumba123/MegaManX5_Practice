@@ -43,15 +43,8 @@ void RoutePage(Game *gameP)
             }
         }
         bool toggle = (buttonsPressed & (PAD_LEFT + PAD_RIGHT + PAD_CROSS)) != 0;
-
-        if (Cursor == 0)
-        {
-            if (toggle)
-            {
-                practice.route ^= 1;
-            }
-        }
-        else if (Cursor == 1)
+        
+        if (Cursor == 1)
         {
             if (toggle)
             {
