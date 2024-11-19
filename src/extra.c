@@ -1,4 +1,5 @@
 #include <common.h>
+#include <misc.h>
 
 extern uint32_t swapTextureFlag;
 
@@ -9,4 +10,9 @@ void MatrixTextureCheck()
         swapTextureFlag = 1;
     }
     DrawMain();
+}
+void LoadLevel2()
+{
+    EndSong();
+    LoadLevel();
 }
