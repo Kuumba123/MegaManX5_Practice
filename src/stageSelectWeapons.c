@@ -59,9 +59,19 @@ void AssignWeapons() // 2 routes: All Stages & Any%
     {
         game.equipedParts[i] = 0;
     }
+        for (size_t i = 0; i < 64; i++)
+    {
+        game.seenTextBoxes[0][i] = 0;
+    }
 
     game.player = 1; // Default to Zero
     game.armorType = 5;
+
+    if (practice.route == 3) //CUSTOM
+    {
+        return;
+    }
+    
 
     if (game.stageId == 0) // Intro
     {

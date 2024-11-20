@@ -1,5 +1,6 @@
 #include <common.h>
 #include <layer.h>
+#include "practice.h"
 
 void AssignWeapons();
 
@@ -25,7 +26,14 @@ void SkipMaverickShowcase(Game *gameP)
         gameP->refights[0] = 1;
     }
     
-    gameP->mode = 7;
+    if (practice.route == 3)
+    {
+        gameP->mode = 5;
+    }else
+    {
+        gameP->mode = 7;
+    }
+    
     gameP->mode2 = 0;
     gameP->mode3 = 0;
     gameP->mode4 = 0;
