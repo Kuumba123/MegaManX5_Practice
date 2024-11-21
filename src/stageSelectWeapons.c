@@ -50,6 +50,9 @@ void AssignWeapons() // 2 routes: All Stages & Any%
     game.maxHPs[1] = 32;
     game.maxAmmos[0] = 48;
     game.maxAmmos[1] = 48;
+    game.tanksAmmo[0] = 0;
+    game.tanksAmmo[1] = 0;
+    game.tanksAmmo[2] = 0;
     game.ranks[0] = 5;
     game.ranks[1] = 3;
     game.hoursLeft = 3456000;
