@@ -40,6 +40,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
 {
     uint32_t parts = 0;
     game.stageSelectMode = 0;
+    game.lives = 2;
     game.igt = 0;
     game.armorParts = 0;
     game.armors = 0;
