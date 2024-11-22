@@ -1,11 +1,13 @@
 #include <common.h>
 
-#define PAGE_TOTAL 4
+#define PAGE_TOTAL 5
 #define Cursor gameP->mode3
 
 static int page;
 
 void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
+
+static char * rankText[] = {"MEH","PA","GA","SA","A","B","C","E"};
 
 void CustomRoute(Game *gameP)
 {
@@ -341,7 +343,7 @@ void CustomRoute(Game *gameP)
                     Cursor = 15;
                 }
             }
-            
+
             if (toggle)
             {
                 parts ^= 1 << Cursor;
@@ -356,6 +358,80 @@ void CustomRoute(Game *gameP)
             }
             DrawDebugText(4, 5, 0, "Part Name-01\nPart Name-02\nPart Name-03\nPart Name-04\nPart Name-05\nPart Name-06\nPart Name-07\nPart Name-08\nPart Name-09\nPart Name-10\nPart Name-11\nPart Name-12\nPart Name-13\nPart Name-14\nPart Name-15\nPart Name-16");
 
+            break;
+
+        case 4: // OTHER PAGE
+            if ((buttonsPressed & PAD_DOWN) != 0)
+            {
+                if (Cursor != 3)
+                {
+                    Cursor += 1;
+                }
+                else
+                {
+                    Cursor = 0;
+                }
+            }
+            else if ((buttonsPressed & PAD_UP) != 0)
+            {
+                if (Cursor != 0)
+                {
+                    Cursor -= 1;
+                }
+                else
+                {
+                    Cursor = 3;
+                }
+            }
+
+            if (Cursor == 0)
+            {
+                if ((buttonsPressed & PAD_RIGHT) != 0)
+                {
+                    gameP->hoursLeft += 1 * 3600 * 60;
+                }
+                else if ((buttonsPressed & PAD_LEFT) != 0)
+                {
+                    gameP->hoursLeft -= 1 * 3600 * 60;
+                }
+            }
+            else if (Cursor == 1)
+            {
+                if ((buttonsPressed & PAD_RIGHT) != 0)
+                {
+                    gameP->stageSelectMode += 1;
+                }
+                else if ((buttonsPressed & PAD_LEFT) != 0)
+                {
+                    gameP->stageSelectMode -= 1;
+                }
+            }
+            else if (Cursor == 2)
+            {
+                if (toggle)
+                {
+                    for (size_t i = 0; i < 64; i++)
+                    {
+                        game.seenTextBoxes[0][i] ^= 0xFF;
+                    }
+                }
+            }
+            else
+            {
+                if ((buttonsPressed & PAD_RIGHT) != 0 && gameP->ranks[gameP->player] != 7)
+                {
+                    gameP->ranks[gameP->player] += 1;
+                }
+                else if ((buttonsPressed & PAD_LEFT) != 0 && gameP->ranks[gameP->player] != 0)
+                {
+                    gameP->ranks[gameP->player] -= 1;
+                }
+            }
+
+            DrawDebugText(12, 3, 2, "OTHER PAGE");
+            DrawDebugText(3, 5 + Cursor, 1, ">");
+            DrawDebugText(4, 5, 0, "Hours Left\nSelect Mode\nSeen Boxes\nPlayer Rank");
+            DrawDebugText(19, 5, 0, "%d\n%d\n%d\n%s", gameP->hoursLeft / 216000, gameP->stageSelectMode, gameP->seenTextBoxes[0][0] != 0, rankText[gameP->ranks[gameP->player]]);
             break;
 
         default:
