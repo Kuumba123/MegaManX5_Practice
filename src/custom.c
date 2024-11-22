@@ -1,6 +1,6 @@
 #include <common.h>
 
-#define PAGE_TOTAL 3
+#define PAGE_TOTAL 4
 #define Cursor gameP->mode3
 
 static int page;
@@ -25,6 +25,8 @@ void CustomRoute(Game *gameP)
         gameP->mode3 = 0;
         gameP->mode4 = 0;
     }
+
+    int parts = 0;
 
     while (true)
     {
@@ -52,14 +54,17 @@ void CustomRoute(Game *gameP)
             {
                 gameP->armors |= 1;
             }
-            if (((gameP->collectables & 0x1000)) != 0) //Sub-Tank 1
+            if (((gameP->collectables & 0x1000)) != 0) // Sub-Tank 1
             {
                 gameP->tanksAmmo[0] |= 0x80;
             }
-            if (((gameP->collectables & 0x2000)) != 0) //Sub-Tank 2
+            if (((gameP->collectables & 0x2000)) != 0) // Sub-Tank 2
             {
                 gameP->tanksAmmo[1] |= 0x80;
             }
+
+            gameP->equipedParts[gameP->armorType] = parts;
+            gameP->parts = parts;
 
             gameP->stageId = gameP->slowMotion;
             gameP->mid = gameP->maverickShow;
@@ -241,12 +246,13 @@ void CustomRoute(Game *gameP)
                 if ((buttonsPressed & PAD_RIGHT) != 0)
                 {
                     gameP->mode4 += 1;
-                }else if ((buttonsPressed & PAD_LEFT) != 0)
+                }
+                else if ((buttonsPressed & PAD_LEFT) != 0)
                 {
                     gameP->mode4 -= 1;
                 }
                 gameP->mode4 &= 7;
-                
+
                 if (toggle)
                 {
                     gameP->collectables2 ^= (1 << gameP->mode4);
@@ -309,6 +315,47 @@ void CustomRoute(Game *gameP)
             DrawDebugText(12, 3, 2, "TANK PAGE");
             DrawDebugText(3, 5 + Cursor, 1, ">");
             DrawDebugText(4, 5, 0, "HEART-%d:\nSUB-TANK 1\nSUB-TANK 2\nWEAPON-TANK\nEX-TANK\nTANK AMMO 1\nTANK AMMO 2\nTANK AMMO 3\nMAX HP\nMAX AMMO", gameP->mode4 + 1);
+            break;
+
+        case 3: // PARTS PAGE
+
+            if ((buttonsPressed & PAD_DOWN) != 0)
+            {
+                if (Cursor != 15)
+                {
+                    Cursor += 1;
+                }
+                else
+                {
+                    Cursor = 0;
+                }
+            }
+            else if ((buttonsPressed & PAD_UP) != 0)
+            {
+                if (Cursor != 0)
+                {
+                    Cursor -= 1;
+                }
+                else
+                {
+                    Cursor = 15;
+                }
+            }
+            
+            if (toggle)
+            {
+                parts ^= 1 << Cursor;
+            }
+
+            DrawDebugText(12, 3, 2, "PARTS PAGE");
+            DrawDebugText(3, 5 + Cursor, 1, ">");
+
+            for (size_t i = 0; i < 16; i++)
+            {
+                DrawDebugText(19, 5 + i, 0, "%d", (parts & (1 << i)) != 0);
+            }
+            DrawDebugText(4, 5, 0, "Part Name-01\nPart Name-02\nPart Name-03\nPart Name-04\nPart Name-05\nPart Name-06\nPart Name-07\nPart Name-08\nPart Name-09\nPart Name-10\nPart Name-11\nPart Name-12\nPart Name-13\nPart Name-14\nPart Name-15\nPart Name-16");
+
             break;
 
         default:
