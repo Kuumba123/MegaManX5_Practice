@@ -39,7 +39,7 @@ static uint8_t sigmaAmmoTable[3] =
 void AssignWeapons() // 2 routes: All Stages & Any%
 {
     uint32_t parts = 0;
-
+    game.stageSelectMode = 0;
     game.igt = 0;
     game.armorParts = 0;
     game.armors = 0;
@@ -62,7 +62,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
     {
         game.equipedParts[i] = 0;
     }
-        for (size_t i = 0; i < 64; i++)
+    for (size_t i = 0; i < 64; i++)
     {
         game.seenTextBoxes[0][i] = 0;
     }
@@ -70,11 +70,10 @@ void AssignWeapons() // 2 routes: All Stages & Any%
     game.player = 1; // Default to Zero
     game.armorType = 5;
 
-    if (practice.route == 3) //CUSTOM
+    if (practice.route == 3) // CUSTOM
     {
         return;
     }
-    
 
     if (game.stageId == 0) // Intro
     {
@@ -108,11 +107,12 @@ void AssignWeapons() // 2 routes: All Stages & Any%
             game.clearedStages = 0xFF;
             game.maxHPs[1] = 38;
             game.maxAmmos[1] = 58;
-            
+
             if (!practice.ultimateArmor)
             {
                 parts = 0x4030;
-            }else
+            }
+            else
             {
                 parts = 0x10;
             }
@@ -146,7 +146,8 @@ void AssignWeapons() // 2 routes: All Stages & Any%
             if (game.player != 0)
             {
                 parts = sigmaPartsTable[game.stageId - 0x10];
-            }else
+            }
+            else
             {
                 parts = 0x10;
             }
