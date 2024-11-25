@@ -11,7 +11,7 @@ void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
 static const char *stageNames[] = {"SIGMA 1", "SIGMA 2", "SIGMA 3", "SIGMA 4", "Intro", "Dynamo-1", "Dynamo-2"};
 static const char *finalStageText[] = {"Start", "POST-Refights"};
 static const char *halfText[] = {"Start", "Mid"};
-
+static const char *vistText[] = {"Vist","Re-Vist"};
 #define Cursor gameP->refights[2]
 
 void DrawSelectableStages(Game *gameP)
@@ -28,7 +28,14 @@ void DrawSelectableStages(Game *gameP)
         }
         else
         {
-            DrawDebugText(12, 18, 2, halfText[Cursor]);
+            if (gameP->mode4 == 1)
+            {
+                DrawDebugText(12, 18, 2, halfText[Cursor]);
+            }
+            else
+            {
+                DrawDebugText(12, 18, 2, vistText[Cursor]);
+            }
         }
     }
 }
