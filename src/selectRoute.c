@@ -14,7 +14,7 @@ void RoutePage(Game *gameP)
 {
     while (true)
     {
-        if ((buttonsPressed & (PAD_L1 + PAD_R1)) != 0)
+        if ((buttonsPressed & PAD_R1) != 0)
         {
             ExitRoutePage(gameP);
             return;
