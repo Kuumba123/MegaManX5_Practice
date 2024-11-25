@@ -1,6 +1,8 @@
 #include <common.h>
 #include "practice.h"
 
+extern bool isRevistFlag;
+
 static uint8_t mavericksClearedTable[8] =
     {8, 0x4D, 9, 0, 0x6F, 0x4F, 0xD, 0x7F};
 static uint8_t mavericksHoursTable[8] =
@@ -80,84 +82,92 @@ void AssignWeapons() // 2 routes: All Stages & Any%
     {
         game.stageSelectMode = 0;
     }
-    else if (game.stageId <= 8) // 8 Maverick Stages
-    {
-        if (game.stageId != 4)
-        {
-            game.ranks[1] = 2;
-        }
-        game.clearedStages = mavericksClearedTable[game.stageId - 1];
-        game.hoursLeft = mavericksHoursTable[game.stageId - 1] * 3600 * 60;
-        game.maxHPs[1] = maverickHealthTable[game.stageId - 1];
-        game.maxAmmos[1] = maverickAmmoTable[game.stageId - 1];
-        game.stageSelectMode = maverickStageSelectModeTable[game.stageId - 1];
-        parts = maverickPartsTable[game.stageId - 1];
-    }
-    else if (game.stageId == 0xC) // Final Level
-    {
-        if (practice.ultimateArmor)
-        {
-            game.player = 0;
-            game.armorType = 4;
-        }
-        game.ranks[1] = 2;
-        game.stageSelectMode = 8;
-        game.armors = 0x10;
-        if (practice.route == 0)
-        {
-            game.clearedStages = 0xFF;
-            game.maxHPs[1] = 38;
-            game.maxAmmos[1] = 58;
-
-            if (!practice.ultimateArmor)
-            {
-                parts = 0x4030;
-            }
-            else
-            {
-                parts = 0x10;
-            }
-        }
-    }
-    else if (game.stageId < 0xC) // dynamo fights...
-    {
-        game.ranks[1] = 2;
-        game.hoursLeft = dynamoHoursTable[game.stageId - 9] * 3600 * 60;
-        game.clearedStages = dynamoMaverickClearedTable[game.stageId - 9];
-        parts = dynamoPartsTable[game.stageId - 9];
-        game.stageSelectMode = dynamoStageSelectModeTable[game.stageId - 9];
-        game.maxHPs[1] = dynamoHealthTable[game.stageId - 9];
-        game.maxAmmos[1] = dynamoAmmoTable[game.stageId - 9];
-    }
     else
-    { // other sigma stages
-        game.ranks[1] = 2;
-        game.stageSelectMode = game.stageId - 0x10 + 5;
-
-        if (practice.ultimateArmor && game.stageId == 0x12)
+    {
+        if (practice.route != 2) // Any%/All-Stages
         {
-            game.player = 0;
-            game.armorType = 0;
-        }
-
-        if (practice.route == 0)
-        {
-            game.hoursLeft = sigmaHoursTable[game.stageId - 0x10] * 3600 * 60;
-            game.clearedStages = sigmaMaverickClearedTable[game.stageId - 0x10];
-            if (game.player != 0)
+            if (game.stageId <= 8) // 8 Maverick Stages
             {
-                parts = sigmaPartsTable[game.stageId - 0x10];
+                if (game.stageId != 4)
+                {
+                    game.ranks[1] = 2;
+                }
+                game.clearedStages = mavericksClearedTable[game.stageId - 1];
+                game.hoursLeft = mavericksHoursTable[game.stageId - 1] * 3600 * 60;
+                game.maxHPs[1] = maverickHealthTable[game.stageId - 1];
+                game.maxAmmos[1] = maverickAmmoTable[game.stageId - 1];
+                game.stageSelectMode = maverickStageSelectModeTable[game.stageId - 1];
+                parts = maverickPartsTable[game.stageId - 1];
+            }
+            else if (game.stageId == 0xC) // Final Level
+            {
+                if (practice.ultimateArmor)
+                {
+                    game.player = 0;
+                    game.armorType = 4;
+                }
+                game.ranks[1] = 2;
+                game.stageSelectMode = 8;
+                game.armors = 0x10;
+                if (practice.route == 0)
+                {
+                    game.clearedStages = 0xFF;
+                    game.maxHPs[1] = 38;
+                    game.maxAmmos[1] = 58;
+
+                    if (!practice.ultimateArmor)
+                    {
+                        parts = 0x4030;
+                    }
+                    else
+                    {
+                        parts = 0x10;
+                    }
+                }
+            }
+            else if (game.stageId < 0xC) // dynamo fights...
+            {
+                game.ranks[1] = 2;
+                game.hoursLeft = dynamoHoursTable[game.stageId - 9] * 3600 * 60;
+                game.clearedStages = dynamoMaverickClearedTable[game.stageId - 9];
+                parts = dynamoPartsTable[game.stageId - 9];
+                game.stageSelectMode = dynamoStageSelectModeTable[game.stageId - 9];
+                game.maxHPs[1] = dynamoHealthTable[game.stageId - 9];
+                game.maxAmmos[1] = dynamoAmmoTable[game.stageId - 9];
             }
             else
-            {
-                parts = 0x10;
-            }
+            { // other sigma stages
+                game.ranks[1] = 2;
+                game.stageSelectMode = game.stageId - 0x10 + 5;
 
-            game.maxHPs[1] = sigmaHealthTable[game.stageId - 0x10];
-            game.maxAmmos[1] = sigmaAmmoTable[game.stageId - 0x10];
+                if (practice.ultimateArmor && game.stageId == 0x12)
+                {
+                    game.player = 0;
+                    game.armorType = 0;
+                }
+
+                if (practice.route == 0)
+                {
+                    game.hoursLeft = sigmaHoursTable[game.stageId - 0x10] * 3600 * 60;
+                    game.clearedStages = sigmaMaverickClearedTable[game.stageId - 0x10];
+                    if (game.player != 0)
+                    {
+                        parts = sigmaPartsTable[game.stageId - 0x10];
+                    }
+                    else
+                    {
+                        parts = 0x10;
+                    }
+
+                    game.maxHPs[1] = sigmaHealthTable[game.stageId - 0x10];
+                    game.maxAmmos[1] = sigmaAmmoTable[game.stageId - 0x10];
+                }
+            }
+        }else //100%
+        {
+
         }
     }
-
     if ((game.clearedStages & 1) != 0) // give Sub-Tank some ammo
     {
         game.collectables = 0x1000;
