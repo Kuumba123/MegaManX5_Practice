@@ -4,13 +4,12 @@
 /*100%*/
 extern bool isRevistFlag;
 static uint8_t hundoMavericksClearedTable[8] = {0, 0xAD, 0x01, 0x05, 0xEF, 0x0D, 0xAF, 0x2D};
-static uint8_t hundoMaverickHealthTable[8] = {32, 44, 32, 32, 48, 36, 32, 40}; // TODO: edit (take player into consideration)
+static uint8_t hundoMaverickHealthTable[8] = {32, 44, 32, 32, 48, 36, 32, 40};
 static uint8_t hundoMaverickAmmoTable[8] = {48, 48, 50, 48, 48, 48, 52, 48};
 static uint8_t hundoMaverickPlayerTable[8] = {1, 0, 1, 0, 0, 0, 1, 0};
 static uint8_t hundoMaverickArmorTypeTable[8] = {5, 4, 5, 4, 3, 4, 5, 4};
 static uint32_t hundoMaverickPartsTable[8] = {0, 0x10, 0, 0x10, 0x10, 0x10, 0x18, 0x10};
 static uint32_t hundoMavericksCollectablesTable[8] = {0, 0xD000, 0x1000, 0, 0xF000, 0x1000, 0xF000, 0x9000};
-static uint32_t hundoMavericksCollectables2Table[8] = {0, 0, 0, 0, 0, 0, 0, 0}; // TODO: edit (hearts)
 /**************/
 static uint8_t hundoDynamoMaverickClearedTable[2] = {9, 0x6F};
 static uint8_t hundoDynamoHealthTable[2] = {32, 48};
@@ -184,6 +183,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                     game.player = 0;
                     game.maxAmmos[0] = 48;
                     game.collectables = 0xF000;
+                    game.armorParts = 0xFF;
 
                     if (game.stageId == 1) // Grizzly
                     {
