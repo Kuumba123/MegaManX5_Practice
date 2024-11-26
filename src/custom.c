@@ -356,7 +356,7 @@ void CustomRoute(Game *gameP)
             {
                 DrawDebugText(19, 5 + i, 0, "%d", (parts & (4 << i)) != 0);
             }
-            DrawDebugText(4, 5, 0, "Speedster\nJumper\nHyper Dash\nEnergy Saver\nSuper Recover\nVirus Guard\nBuster Plus\nSpeed Shot\nVirus Buster\nBurst Shots\nUltimate Buster\nQuick Charge\nZ-Saber Plus\nZ-Saber Extend\nShot Eraser\nShock Buffer");
+            DrawDebugText(4, 5, 0, "Speedster\nJumper\nHyper Dash\nW-Energy Saver\nSuper Recover\nVirus Guard\nBuster Plus\nSpeed Shot\nVirus Buster\nBurst Shots\nUltimate Buster\nQuick Charge\nZ-Saber Plus\nZ-Saber Extend\nShot Eraser\nShock Buffer");
 
             break;
 
