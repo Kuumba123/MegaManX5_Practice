@@ -172,6 +172,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                 game.stageSelectMode = 0xA;
                 game.clearedStages = hundoMavericksClearedTable[game.stageId - 1];
                 game.player = hundoMaverickPlayerTable[game.stageId - 1];
+                game.maxHPs[game.player] = hundoMaverickHealthTable[game.stageId - 1];
                 game.maxAmmos[game.player] = hundoMaverickAmmoTable[game.stageId - 1];
                 game.armorType = hundoMaverickArmorTypeTable[game.stageId - 1];
                 game.collectables = hundoMavericksCollectablesTable[game.stageId - 1];
@@ -209,6 +210,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                 game.stageSelectMode = 0xA;
                 game.ranks[0] = 3;
                 game.ranks[1] = 3;
+                game.maxHPs[0] = 58;
                 game.maxAmmos[1] = 54;
                 game.clearedStages = 0xFF;
                 
@@ -227,6 +229,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                 game.stageSelectMode = 0xA;
                 game.player = hundoDynamoPlayerTable[game.stageId - 1];
                 game.clearedStages = hundoDynamoMaverickClearedTable[game.stageId - 1];
+                game.maxHPs[game.player] = hundoDynamoHealthTable[game.stageId - 1];
                 game.maxAmmos[game.player] = hundoDynamoAmmoTable[game.stageId - 9];
                 game.ranks[game.player] = 2;
                 game.collectables = hundoDynamoCollectablesTable[game.stageId - 9];
