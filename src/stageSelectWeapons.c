@@ -218,7 +218,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                 {
                     game.player = 0;
                     game.armorType = 4;
-                    parts = 0x4010;
+                    parts = 0x2010;
                 }else{
                     parts = 0xC030;
                 }
