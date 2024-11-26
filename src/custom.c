@@ -346,7 +346,7 @@ void CustomRoute(Game *gameP)
 
             if (toggle)
             {
-                parts ^= 1 << Cursor;
+                parts ^= 4 << Cursor;
             }
 
             DrawDebugText(12, 3, 2, "PARTS PAGE");
@@ -354,9 +354,9 @@ void CustomRoute(Game *gameP)
 
             for (size_t i = 0; i < 16; i++)
             {
-                DrawDebugText(19, 5 + i, 0, "%d", (parts & (1 << i)) != 0);
+                DrawDebugText(19, 5 + i, 0, "%d", (parts & (4 << i)) != 0);
             }
-            DrawDebugText(4, 5, 0, "Part Name-01\nPart Name-02\nPart Name-03\nPart Name-04\nPart Name-05\nPart Name-06\nPart Name-07\nPart Name-08\nPart Name-09\nPart Name-10\nPart Name-11\nPart Name-12\nPart Name-13\nPart Name-14\nPart Name-15\nPart Name-16");
+            DrawDebugText(4, 5, 0, "Speedster\nJumper\nHyper Dash\nEnergy Saver\nSuper Recover\nVirus Guard\nBuster Plus\nSpeed Shot\nVirus Buster\nBurst Shots\nUltimate Buster\nQuick Charge\nZ-Saber Plus\nZ-Saber Extend\nShot Eraser\nShock Buffer");
 
             break;
 
