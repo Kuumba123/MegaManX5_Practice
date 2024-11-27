@@ -4,8 +4,8 @@
 /*100%*/
 extern bool isRevistFlag;
 static uint8_t hundoMavericksClearedTable[8] = {0, 0xAD, 0x01, 0x05, 0xEF, 0x0D, 0xAF, 0x2D};
-static uint8_t hundoMaverickHealthTable[8] = {32, 44, 32, 32, 48, 36, 32, 40};
-static uint8_t hundoMaverickAmmoTable[8] = {48, 48, 50, 48, 48, 48, 52, 48};
+static uint8_t hundoMaverickHealthTable[8] = {32, 42, 32, 32, 46, 34, 32, 38};
+static uint8_t hundoMaverickAmmoTable[8] = {48, 48, 48, 48, 48, 48, 50, 48};
 static uint8_t hundoMaverickPlayerTable[8] = {1, 0, 1, 0, 0, 0, 1, 0};
 static uint8_t hundoMaverickArmorTypeTable[8] = {5, 4, 5, 4, 3, 4, 5, 4};
 static uint32_t hundoMaverickPartsTable[8] = {0, 0x10, 0, 0x10, 0x10, 0x10, 0x18, 0x10};
@@ -13,7 +13,7 @@ static uint32_t hundoMavericksCollectablesTable[8] = {0, 0xD000, 0x1000, 0, 0xF0
 /**************/
 static uint8_t hundoDynamoMaverickClearedTable[2] = {9, 0x6F};
 static uint8_t hundoDynamoHealthTable[2] = {32, 48};
-static uint8_t hundoDynamoAmmoTable[2] = {52, 48};
+static uint8_t hundoDynamoAmmoTable[2] = {50, 48};
 static uint8_t hundoDynamoPlayerTable[2] = {1, 0};
 static uint32_t hundoDynamoPartsTable[2] = {0, 0x10};
 static uint32_t hundoDynamoCollectablesTable[2] = {0x1000, 0xF000};
@@ -188,19 +188,22 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                     if (game.stageId == 1) // Grizzly
                     {
                         game.armorType = 2;
-                        game.maxHPs[0] = 56;
+                        game.maxHPs[0] = 48;
+                        game.maxAmmos[0] = 50;
                         parts = 0x18;
                     }
                     else if (game.stageId == 3) // Duff McWhalen
                     {
                         game.armorType = 4;
-                        game.maxHPs[0] = 52;
+                        game.maxHPs[0] = 48;
+                        game.maxAmmos[0] = 50;
                         parts = 0x10;
                     }
                     else // Axl Rose
                     {
                         game.armorType = 3;
-                        game.maxHPs[0] = 54;
+                        game.maxHPs[0] = 48;
+                        parts = 0;
                     }
                 }
                 game.ranks[game.player] = 2;
@@ -264,14 +267,6 @@ void AssignWeapons() // 2 routes: All Stages & Any%
             if ((game.armorParts & 0xF0) == 0xF)
             {
                 game.armors |= 4;
-            }
-
-            if (isRevistFlag)
-            {
-                for (size_t i = 0; i < 64; i++)
-                {
-                    game.seenTextBoxes[0][i] = 0xFF;
-                }
             }
         }
         //...
