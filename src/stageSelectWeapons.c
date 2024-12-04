@@ -189,7 +189,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                     {
                         game.armorType = 2;
                         game.maxHPs[0] = 48;
-                        game.maxAmmos[0] = 50;
+                        game.maxAmmos[0] = 52;
                         parts = 0x18;
                     }
                     else if (game.stageId == 3) // Duff McWhalen
@@ -202,7 +202,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                     else // Axl Rose
                     {
                         game.armorType = 3;
-                        game.maxHPs[0] = 48;
+                        game.maxHPs[0] = 50;
                         parts = 0;
                     }
                 }
@@ -230,9 +230,13 @@ void AssignWeapons() // 2 routes: All Stages & Any%
             else if (game.stageId < 0xC) // dynamo fights
             {
                 game.stageSelectMode = 0xA;
-                game.player = hundoDynamoPlayerTable[game.stageId - 1];
-                game.clearedStages = hundoDynamoMaverickClearedTable[game.stageId - 1];
-                game.maxHPs[game.player] = hundoDynamoHealthTable[game.stageId - 1];
+                game.player = hundoDynamoPlayerTable[game.stageId - 9];
+                if (game.player == 0)
+                {
+                    game.armorType = 4;
+                }
+                game.clearedStages = hundoDynamoMaverickClearedTable[game.stageId - 9];
+                game.maxHPs[game.player] = hundoDynamoHealthTable[game.stageId - 9];
                 game.maxAmmos[game.player] = hundoDynamoAmmoTable[game.stageId - 9];
                 game.ranks[game.player] = 2;
                 game.collectables = hundoDynamoCollectablesTable[game.stageId - 9];
