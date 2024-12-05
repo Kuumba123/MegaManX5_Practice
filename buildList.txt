@@ -16,6 +16,9 @@ american, exe , 0x80020b68 , 0x0 , src/determineTitleOptionHook.s
 
 american, exe , 0x80033460 , 0x0 , src/exit.s
 
+american, exe , 0x80025ab4 , 0x0 , src/showPoint.s
+american, exe , 0x80025dd4 , 0x0 , src/showPoint2.s
+
 american, exe , 0x800205ac , 0x0 , src/determineClear.c
 american, exe , 0x80020cf4 , 0x0 , src/stateReset.c
 

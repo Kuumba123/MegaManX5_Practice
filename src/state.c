@@ -58,6 +58,8 @@ void RestoreQuadObjects();
 
 void LoadSigmaOverlay(int ovl);
 
+void CheckPointCheck(Game* gameP);
+
 void SwapTexture(bool sync)
 {
     if (sync)
@@ -312,7 +314,7 @@ void StateCheck(Game *gameP)
 
     if (loadState != 1 && FADE_F == 0)
     {
-        if ((buttonsPressed & (PAD_L2 | PAD_R2 | PAD_SELECT)) != 0)
+        if ((buttonsPressed & (PAD_L2 | PAD_R2 | PAD_SELECT | PAD_LEFT | PAD_RIGHT)) != 0)
         {
             if ((buttonsHeld & (PAD_R2 + PAD_SELECT)) == (PAD_R2 + PAD_SELECT))
             {
@@ -321,6 +323,9 @@ void StateCheck(Game *gameP)
             else if ((buttonsHeld & (PAD_L2 + PAD_SELECT)) == (PAD_L2 + PAD_SELECT) && practice.state.made)
             {
                 LoadState();
+            }else
+            {
+                CheckPointCheck(gameP);
             }
         }
     }

@@ -75,7 +75,7 @@ void DetermineClear(Game *gameP)
             gameP->weaponTemp = mega.weapon;
             gameP->virusMeterTemp = mega.virusMeter;
 
-            if (gameP->stageId == 6) // Teleporter in 2nd Half of Izzy Glow
+            if (gameP->stageId == 6 && gameP->mid != 0) // Teleporter in 2nd Half of Izzy Glow
             {
                 swapTextureFlag = 1;
             }
@@ -161,4 +161,17 @@ void MemoryCopy(void *dest, const void *src, size_t size)
     {
         d[i] = s[i];
     }
+}
+void MatrixTextureCheck()
+{
+    if (game.stageId == 4)
+    {
+        swapTextureFlag = 1;
+    }
+    DrawMain();
+}
+void LoadLevel2()
+{
+    EndSong();
+    LoadLevel();
 }

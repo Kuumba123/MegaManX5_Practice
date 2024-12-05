@@ -1,18 +1,17 @@
 #include <common.h>
 #include <misc.h>
 
-extern uint32_t swapTextureFlag;
+extern int8_t maxCheckPoint[];
 
-void MatrixTextureCheck()
+void CheckPointCheck(Game* gameP)
 {
-    if (game.stageId == 4)
+    if ((buttonsHeld & (PAD_RIGHT + PAD_SELECT)) == (PAD_RIGHT + PAD_SELECT) && gameP->point != maxCheckPoint[gameP->stageId * 2 + gameP->mid])
     {
-        swapTextureFlag = 1;
+        gameP->point += 1;
+        gameP->clear = 0xC0;
+    }else if ((buttonsHeld & (PAD_LEFT + PAD_SELECT)) == (PAD_LEFT + PAD_SELECT) && gameP->point != 0)
+    {
+        gameP->point -= 1;
+        gameP->clear = 0xC0;
     }
-    DrawMain();
-}
-void LoadLevel2()
-{
-    EndSong();
-    LoadLevel();
 }
