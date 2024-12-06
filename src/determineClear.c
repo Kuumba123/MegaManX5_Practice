@@ -7,13 +7,31 @@ extern bool LevelMidTable[];
 
 extern uint32_t swapTextureFlag;
 
-void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
+extern int8_t checkPointNew;
+
+static int8_t checkPointTextureFlags[] =
+    {
+        0x0E, 0,    // ST00
+        0x18, 0,    // ST01
+        0, 0x04,    // ST02
+        0x70, 0,    // ST03
+        0x06, 0x02, // ST04
+        0x1E, 0,    // ST05
+        0, 0x0E,    // ST06
+        0xF8, 0,    // ST07
+        0x1C, 0,    // ST08
+        0, 0,       // ST09
+        0, 0,       // ST0A
+        0, 0,       // ST0B
+        0, 0,       // ST0C
+        0, 0,       // ST0D
+        0, 0,       // ST0E
+        0, 0,       // ST0F
+        0x0E, 0,    // ST10
+                    // ST11-16 not needed
+};
 
 void SwapTexture(bool sync);
-
-void CreateTitleScreenThread();
-
-void LoadBackupScreens();
 
 void DetermineClear(Game *gameP)
 {
@@ -68,6 +86,11 @@ void DetermineClear(Game *gameP)
     {
         if (gameP->clear < 0)
         {
+            if ((uint8_t)gameP->clear == 0xC1)
+            {
+                gameP->point = checkPointNew;
+            }
+
             gameP->spawnFlags = 0xFF;
             gameP->hpTemp = mega.hp;
 
@@ -75,9 +98,29 @@ void DetermineClear(Game *gameP)
             gameP->weaponTemp = mega.weapon;
             gameP->virusMeterTemp = mega.virusMeter;
 
-            if (gameP->stageId == 6 && gameP->mid != 0) // Teleporter in 2nd Half of Izzy Glow
+            if ((uint8_t)gameP->clear != 0xC1)
             {
-                swapTextureFlag = 1;
+                if (gameP->stageId == 6 && gameP->mid != 0) // Teleporter in 2nd Half of Izzy Glow
+                {
+                    swapTextureFlag = 1;
+                }
+            }
+            else
+            {
+                if (gameP->stageId == 0xC)
+                {
+                    if ((practice.page != 0 && gameP->point != 21) || (practice.page == 0 && gameP->point == 21))
+                    {
+                        swapTextureFlag = 1;
+                    }
+                }
+                else if (gameP->stageId < 0x11)
+                {
+                    if (practice.page != ((checkPointTextureFlags[gameP->stageId * 2 + gameP->mid] & (1 << gameP->point)) != 0))
+                    {
+                        swapTextureFlag = 1;
+                    }
+                }
             }
 
             /*Refight Teleporter Check*/
@@ -96,7 +139,7 @@ void DetermineClear(Game *gameP)
         else // Actual Real Clear
         {
             gameP->spawnFlags = 0;
-            
+
             if (gameP->stageId == 0 || gameP->stageId > 8) // Intro & Dynamo & Sigma Stages
             {
 
@@ -125,53 +168,4 @@ void DetermineClear(Game *gameP)
             }
         }
     }
-}
-void DrawLoadText()
-{
-    DrawDebugText(4, 4, 2, "(Loading)");
-}
-void ResetState()
-{
-    practice.state.made = false;
-    practice.page = 0;
-    practice.sigmaOvl = 0;
-
-    if (practice.skipRefights)
-    {
-        game.point = 0xA;
-    }
-    LoadLevel();
-}
-void BackupScreenChck()
-{
-    if (game.stageId != 0xC || game.point != 3)
-    {
-        LoadBackupScreens();
-    }
-}
-void MemoryCopy(void *dest, const void *src, size_t size)
-{
-    // Ensure that the size is a multiple of 4 bytes
-    size_t num_4byte_blocks = size / 4;
-
-    uint32_t *d = (uint32_t *)dest;
-    const uint32_t *s = (const uint32_t *)src;
-
-    for (size_t i = 0; i < num_4byte_blocks; i++)
-    {
-        d[i] = s[i];
-    }
-}
-void MatrixTextureCheck()
-{
-    if (game.stageId == 4)
-    {
-        swapTextureFlag = 1;
-    }
-    DrawMain();
-}
-void LoadLevel2()
-{
-    EndSong();
-    LoadLevel();
 }

@@ -142,33 +142,6 @@ int16_t addressesSize[] = {
     0x120   // After Images
 };
 
-int8_t maxCheckPoint[] = 
-{
-    3,0, //ST00
-    4,0, //ST01
-    1,2, //ST02
-    6,0, //ST03
-    2,1, //ST04
-    4,0, //ST05
-    1,3, //ST06
-    7,0, //ST07
-    4,0, //ST08
-    0,0, //ST09
-    0,0, //ST0A
-    0,0, //ST0B
-    0x15,0, //ST0C
-    0,0, //ST0D
-    0,0, //ST0E
-    0,0, //ST0F
-    3,0, //ST10
-    3,0, //ST11
-    2,0, //ST12
-    0,0,
-    0,0,
-    0,0,
-    1,0  //ST16
-};
-
 static RECT rect = {0, 500, 256, 12};
 
 void SaveQuadObjects()
