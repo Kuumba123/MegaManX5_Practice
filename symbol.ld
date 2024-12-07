@@ -21,6 +21,8 @@ SwapWeaponTexturesClut = 0x8003df20;
 LevelMidTable = 0x800710f0;
 CreateTitleScreenThread = 0x8001e6ac;
 
+MegaStatusStartTable = 0x8007486c;
+
 
 /*libpad.lib*/
 PadSetAct = 0x8006ccb8;
