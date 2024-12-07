@@ -162,7 +162,7 @@ void SwappedTextureCheck()
 }
 void RoseTextureCheck(Object *objP)
 {
-    if (game.stageId == 7 && objP->stageVar == 0x85)
+    if ((game.stageId == 7 && objP->stageVar == 0x85) || (game.stageId == 7 && objP->stageVar == 0x87))
     {
         if (practice.page == 0)
         {
