@@ -30,7 +30,7 @@ american NORELOAD  , ST0D_OVL , 0x800f536c , 0 , src/stageSelectTable.c
 american NORELOAD , ST0D_OVL , 0x800f111c , 0 , src/selectRoute.c
 american NORELOAD , ST0D_OVL , 0x800f6dfc , 0 , src/stageSelectExtra.c
 american NORELOAD , ST0D_OVL , 0x800eff4c , 0x0 , src/stageSelectPick.c
-american  , ST0D_OVL , 0x800f1a90 , 0x0 , src/stageSelectCursors.c
+american NORELOAD , ST0D_OVL , 0x800f1a90 , 0x0 , src/stageSelectCursors.c
 american NORELOAD , ST0D_OVL , 0x800f0ed8 , 0x0 , src/stageSelectDisableMisc.c
 american NORELOAD , ST0D_OVL , 0x800f101c , 0x0 , src/skipMaverick.c
 american NORELOAD , ST0D_OVL , 0x800f03c4 , 0x0 , src/stageSelectWeapons.c
