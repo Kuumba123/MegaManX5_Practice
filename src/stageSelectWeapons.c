@@ -14,7 +14,7 @@ static uint32_t hundoMavericksCollectablesTable[8] = {0, 0xD000, 0x1000, 0, 0xF0
 static uint8_t hundoMavericksHoursTable[8] = {12, 6, 11, 9, 3, 8, 4, 7};
 static uint8_t hundoMavericksRankTable[8] = {2, 3, 1, 5, 1, 4, 2, 4};
 /**************/
-static uint8_t hundoDynamoMaverickClearedTable[2] = {9, 0x6F};
+static uint8_t hundoDynamoMaverickClearedTable[2] = {5, 0xAF};
 static uint8_t hundoDynamoHealthTable[2] = {32, 46};
 static uint8_t hundoDynamoAmmoTable[2] = {50, 48};
 static uint8_t hundoDynamoPlayerTable[2] = {1, 0};
@@ -187,6 +187,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                     game.player = 0;
                     game.collectables = 0xF000;
                     game.armorParts = 0xFB;
+                    game.ranks[0] = 2;
 
                     if (game.stageId == 1) // Grizzly
                     {
@@ -236,6 +237,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                 game.maxAmmos[0] = 52;
                 game.maxAmmos[1] = 52;
                 game.clearedStages = 0xFF;
+                game.collectables = 0xF000;
                 
                 if (practice.ultimateArmor)
                 {
