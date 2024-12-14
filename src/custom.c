@@ -469,7 +469,7 @@ void CustomRoute(Game *gameP)
         }
 
         DrawDebugText(28, 3, 2, "%d/%d", page + 1, PAGE_TOTAL);
-        DrawDebugText(9, 24, 1, "Press Select to\nStart the Stage");
+        DrawDebugText(9, 24, 1, "Press Start to\nStart the Stage");
         ThreadSleep(1);
     }
 }
