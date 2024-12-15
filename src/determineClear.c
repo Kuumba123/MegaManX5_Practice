@@ -90,7 +90,7 @@ void DetermineClear(Game *gameP)
             {
                 gameP->point = checkPointNew;
             }
-
+            practice.sigmaOvl = 0;
             gameP->spawnFlags = 0xFF;
             gameP->hpTemp = mega.hp;
 
