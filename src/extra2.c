@@ -1,4 +1,5 @@
 #include <common.h>
+#include <object.h>
 #include <misc.h>
 #include "practice.h"
 
@@ -37,7 +38,7 @@ void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
 
 void CheckPointCheck(Game *gameP)
 {
-    if (gameP->clear == 0 && maxCheckPoint[gameP->stageId * 2 + gameP->mid] != 0)
+    if (gameP->clear == 0 && maxCheckPoint[gameP->stageId * 2 + gameP->mid] != 0 && mega.hp != 0)
     {
         if ((buttonsHeld & (PAD_RIGHT + PAD_SELECT)) == (PAD_RIGHT + PAD_SELECT))
         {
