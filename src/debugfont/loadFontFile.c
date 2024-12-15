@@ -24,6 +24,7 @@ void LoadDebugCodeFile()
         LoadFile(&files[i]);
     }
     practice.sensativity = DEFAULT_SENSITIVITY;
+    practice.showEnigma = true;
     NewThread(0, StartingThread);
 }
 #undef StartingThread

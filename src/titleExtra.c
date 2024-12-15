@@ -1,5 +1,6 @@
 #include <common.h>
 #include <object.h>
+#include "practice.h"
 
 #define Demo (*(int8_t *)((int)titleP + 0xC))
 
@@ -29,7 +30,7 @@ void TitleManip(struct Title *titleP)
     uint8_t pastCursor = titleP->mode4;
     if ((buttonsPressed & PAD_DOWN) != 0)
     {
-        if (titleP->mode4 == 2)
+        if (titleP->mode4 == 3)
         {
             titleP->mode4 = 0;
         }
@@ -42,7 +43,7 @@ void TitleManip(struct Title *titleP)
     {
         if (titleP->mode4 == 0)
         {
-            titleP->mode4 = 2;
+            titleP->mode4 = 3;
         }
         else
         {
@@ -107,6 +108,14 @@ void TitleManip(struct Title *titleP)
             }
         }
     }
+    else if (titleP->mode4 == 2)
+    {
+        if ((buttonsPressed & (PAD_START + PAD_CROSS)) != 0)
+        {
+            practice.showEnigma ^= 1;
+        }
+    }
+    
     else
     {
         if ((buttonsPressed & (PAD_START + PAD_CROSS)) != 0)
@@ -123,7 +132,7 @@ void TitleManip(struct Title *titleP)
 
     DrawDebugText(BASE_X - 1, BASE_Y + titleP->mode4, 1, ">");
 
-    DrawDebugText(BASE_X, BASE_Y, 1, "ENIGMA-SHOT\nDEMO:%d\nPLAY-DEMO", Demo);
+    DrawDebugText(BASE_X, BASE_Y, 1, "ENIGMA-SHOT\nDEMO:%d\nShow-Enigma:%d\nPLAY-DEMO", Demo,practice.showEnigma);
 }
 void ShowPracticeTitleText()
 {

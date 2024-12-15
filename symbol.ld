@@ -7,6 +7,8 @@ enemyDataPointers = 0x80072eac;
 EnigmaShotSucseed = 0x800fa004;
 
 title = 0x800d1f28;
+TitleDemoEnd = 0x8001ed4c;
+TitleDemoPlay = 0x8001ea54;
 
 loadState = 0x8009811c;
 LoadCompressedImage = 0x80017348;

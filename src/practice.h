@@ -37,6 +37,7 @@ typedef struct{
     bool cancelXA;
     bool analog;
     uint8_t sensativity;
+    bool showEnigma;
 }Practice;
 
 extern Practice practice;
