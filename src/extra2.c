@@ -7,7 +7,9 @@
 
 int8_t checkPointNew = 0xFF;
 
-static int8_t maxCheckPoint[] =
+void CheckPointMenu();
+
+int8_t maxCheckPoint[] =
     {
         3, 0,    // ST00
         4, 0,    // ST01
@@ -50,6 +52,11 @@ void CheckPointCheck(Game *gameP)
             checkPointNew = gameP->point - 1;
             gameP->clear = 0xC1;
         }
+        else if ((buttonsHeld & (PAD_L1 + PAD_R1 + PAD_TRIANGLE + PAD_SELECT)) == (PAD_L1 + PAD_R1 + PAD_TRIANGLE + PAD_SELECT))
+        {
+            CheckPointMenu();
+        }
+        
         if (checkPointNew > maxCheckPoint[gameP->stageId * 2 + gameP->mid])
         {
             checkPointNew = 0;
@@ -59,11 +66,6 @@ void CheckPointCheck(Game *gameP)
             checkPointNew = maxCheckPoint[gameP->stageId * 2 + gameP->mid];
         }
     }
-}
-
-void DrawLoadText()
-{
-    DrawDebugText(4, 4, 2, "(Loading)");
 }
 void ResetState()
 {
