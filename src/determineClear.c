@@ -89,6 +89,8 @@ void DetermineClear(Game *gameP)
             if ((uint8_t)gameP->clear == 0xC1)
             {
                 gameP->point = checkPointNew;
+                mega.hp = gameP->maxHPs[gameP->player];
+                memset(&mega.ammo[0],gameP->maxAmmos[gameP->player], 32);
             }
             practice.sigmaOvl = 0;
             gameP->spawnFlags = 0xFF;
