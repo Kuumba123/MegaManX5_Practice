@@ -117,3 +117,4 @@ void ShowDemoEnigma2(char * p)
 }
 
 #undef RNG
+#undef MAIN_THREAD
