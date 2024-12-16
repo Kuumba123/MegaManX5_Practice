@@ -3,6 +3,7 @@
 #include "practice.h"
 
 #define RNG *(uint16_t *)0x80093F70
+#define MAIN_THREAD 0x80020904
 
 extern int8_t maxCheckPoint[];
 extern int8_t checkPointNew;
@@ -38,7 +39,8 @@ void CheckPointMenu()
             game.mode3 = 0;
             game.mode4 = 0;
             game.point = 0;
-            NewThread2(0x80020904);
+            EndSong();
+            NewThread2(MAIN_THREAD);
         }
         
         if ((buttonsPressed & PAD_DOWN) != 0)
