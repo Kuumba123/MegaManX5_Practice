@@ -8,8 +8,8 @@
 extern int8_t maxCheckPoint[];
 extern int8_t checkPointNew;
 
-void TitleDemoEnd(char * p);
-void TitleDemoPlay(char * p);
+void TitleDemoEnd(char *p);
+void TitleDemoPlay(char *p);
 
 void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
 
@@ -18,14 +18,14 @@ void CheckPointMenu()
     int mouse = 0;
     int8_t max = maxCheckPoint[game.stageId * 2 + game.mid];
 
-    while (true) //Loop
+    while (true) // Loop
     {
         if ((buttonsPressed & PAD_TRIANGLE) != 0)
         {
             break;
         }
 
-        //Check Inputs
+        // Check Inputs
         if ((buttonsPressed & PAD_CROSS) != 0)
         {
             checkPointNew = mouse;
@@ -42,7 +42,7 @@ void CheckPointMenu()
             EndSong();
             NewThread2(MAIN_THREAD);
         }
-        
+
         if ((buttonsPressed & PAD_DOWN) != 0)
         {
             mouse++;
@@ -51,26 +51,31 @@ void CheckPointMenu()
         {
             mouse--;
         }
-        
 
         if (mouse < 0)
         {
             mouse = max;
-        }else if (mouse > max)
+        }
+        else if (mouse > max)
         {
             mouse = 0;
         }
-        
-        DrawDebugText(3,5 + mouse,1, ">");
+
+        DrawDebugText(3, 5 + mouse, 1, ">");
         for (size_t i = 0; i < (max + 1); i++)
         {
-            DrawDebugText(4,5 + i,0, "CHECKPOINT %d",i);
+            DrawDebugText(4, 5 + i, 0, "CHECKPOINT %d", i);
         }
         DrawDebugText(18, 22, 1, "X = Spawn\nO = Restart\n^ = Exit");
         DrawDebugText(12, 3, 2, "CHECKPOINT PAGE");
         ThreadSleep(1);
     }
-    
+}
+void ResetAmmo(Game *gameP)
+{
+    gameP->point = checkPointNew;
+    mega.hp = gameP->maxHPs[gameP->player];
+    memset(&mega.ammo[0], gameP->maxAmmos[gameP->player], 32);
 }
 void DrawLoadText()
 {
@@ -82,7 +87,7 @@ void DrawManipText()
     {
         return;
     }
-    
+
     uint16_t pastRNG = RNG;
     uint16_t rng;
     for (size_t i = 0; i < 9; i++)
@@ -92,25 +97,25 @@ void DrawManipText()
     rng = RNG;
     if ((rng % 64) < 4)
     {
-        DrawDebugText(11,3,1,"Works");
+        DrawDebugText(11, 3, 1, "Works");
     }
     else
     {
-        DrawDebugText(11,3,2,"Fails");
+        DrawDebugText(11, 3, 2, "Fails");
     }
     RNG = pastRNG;
-    DrawDebugText(4,3,0,"Enigma:");
+    DrawDebugText(4, 3, 0, "Enigma:");
 }
-void ShowDemoEnigma(char * p)
+void ShowDemoEnigma(char *p)
 {
     if (p[0xE] != 1)
     {
         DrawManipText();
     }
-    
+
     TitleDemoEnd(p);
 }
-void ShowDemoEnigma2(char * p)
+void ShowDemoEnigma2(char *p)
 {
     TitleDemoPlay(p);
     DrawManipText();
