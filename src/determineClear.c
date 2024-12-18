@@ -61,7 +61,7 @@ void DetermineClear(Game *gameP)
         {
             if (gameP->stageId == 0xC && (gameP->point == 0x15 || gameP->point == 0xA))
             {
-                gameP->refights[3] = 1;
+                gameP->refights[3] = 0;
                 gameP->refights[4] = 0;
             }
             LoadLevel();
