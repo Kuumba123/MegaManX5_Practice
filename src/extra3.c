@@ -92,6 +92,7 @@ void CheckPointMenu()
             game.mode3 = 0;
             game.mode4 = 0;
             game.point = 0;
+            game.mid = 0;
             EndSong();
             LoadRestore();
             NewThread2(MAIN_THREAD);
