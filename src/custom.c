@@ -365,7 +365,7 @@ void CustomRoute(Game *gameP)
         case 4: // OTHER PAGE
             if ((buttonsPressed & PAD_DOWN) != 0)
             {
-                if (Cursor != 3)
+                if (Cursor != 4)
                 {
                     Cursor += 1;
                 }
@@ -382,7 +382,7 @@ void CustomRoute(Game *gameP)
                 }
                 else
                 {
-                    Cursor = 3;
+                    Cursor = 4;
                 }
             }
 
@@ -418,7 +418,7 @@ void CustomRoute(Game *gameP)
                     }
                 }
             }
-            else
+            else if (Cursor == 3)
             {
                 if ((buttonsPressed & PAD_RIGHT) != 0 && gameP->ranks[gameP->player] != 7)
                 {
@@ -429,11 +429,19 @@ void CustomRoute(Game *gameP)
                     gameP->ranks[gameP->player] -= 1;
                 }
             }
+            else
+            {
+                if (toggle)
+                {
+                    *(uint8_t*)((int)gameP + 0xCB) ^= 0x80;
+                }
+                
+            }
 
             DrawDebugText(12, 3, 2, "OTHER PAGE");
             DrawDebugText(3, 5 + Cursor, 1, ">");
-            DrawDebugText(4, 5, 0, "Hours Left\nSelect Mode\nSeen Boxes\nPlayer Rank");
-            DrawDebugText(19, 5, 0, "%d\n%d\n%d\n%s", gameP->hoursLeft / 216000, gameP->stageSelectMode, gameP->seenTextBoxes[0][0] != 0, rankText[gameP->ranks[gameP->player]]);
+            DrawDebugText(4, 5, 0, "Hours Left\nSelect Mode\nSeen Boxes\nPlayer Rank\nNo Awaken Zero");
+            DrawDebugText(19, 5, 0, "%d\n%d\n%d\n%s\n%d", gameP->hoursLeft / 216000, gameP->stageSelectMode, gameP->seenTextBoxes[0][0] != 0, rankText[gameP->ranks[gameP->player]], *(uint8_t*)((int)gameP + 0xCB) != 0);
             break;
 
         default:
