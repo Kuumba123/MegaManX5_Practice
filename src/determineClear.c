@@ -61,7 +61,8 @@ void DetermineClear(Game *gameP)
         {
             if (gameP->stageId == 0xC && (gameP->point == 0x15 || gameP->point == 0xA))
             {
-                gameP->refights[3] = 0;
+                gameP->refights[3] = 1;
+                gameP->refights[4] = 0;
             }
             LoadLevel();
         }
@@ -87,10 +88,6 @@ void DetermineClear(Game *gameP)
     {
         if (gameP->clear < 0)
         {
-            if ((uint8_t)gameP->clear == 0xC1)
-            {
-                ResetAmmo(gameP);
-            }
             practice.sigmaOvl = 0;
             gameP->spawnFlags = 0xFF;
             gameP->hpTemp = mega.hp;
@@ -108,6 +105,7 @@ void DetermineClear(Game *gameP)
             }
             else
             {
+                ResetAmmo(gameP);
                 if (gameP->stageId == 0xC)
                 {
                     if ((practice.page != 0 && gameP->point != 21) || (practice.page == 0 && gameP->point == 21))

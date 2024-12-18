@@ -42,6 +42,9 @@ static uint8_t sigmaMaverickClearedTable[3] = {0x6F, 0x7F, 0x7F};
 static uint32_t sigmaPartsTable[3] = {0x4030, 0x4030, 0x4030};
 static uint8_t sigmaHealthTable[3] = {36, 36, 36};
 static uint8_t sigmaAmmoTable[3] = {54, 54, 56};
+static uint8_t sigmaHoursTable[3] = {6,4,3};
+
+void SaveRestore();
 
 void AssignWeapons() // 2 routes: All Stages & Any%
 {
@@ -96,7 +99,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                     game.ranks[1] = 2;
                 }
                 game.clearedStages = mavericksClearedTable[game.stageId - 1];
-                hoursLeft = mavericksHoursTable[game.stageId - 1] * 3600 * 60;
+                hoursLeft = mavericksHoursTable[game.stageId - 1];
                 game.maxHPs[1] = maverickHealthTable[game.stageId - 1];
                 game.maxAmmos[1] = maverickAmmoTable[game.stageId - 1];
                 game.stageSelectMode = maverickStageSelectModeTable[game.stageId - 1];
@@ -109,11 +112,13 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                     game.player = 0;
                     game.armorType = 4;
                 }
-                game.ranks[1] = 2;
                 game.stageSelectMode = 8;
                 game.armors = 0x10;
+                hoursLeft = 12;
                 if (practice.route == 0) // All Stages
                 {
+                    hoursLeft = 1;
+                    game.ranks[1] = 2;
                     game.clearedStages = 0xFF;
                     game.maxHPs[1] = 38;
                     game.maxAmmos[1] = 56;
@@ -131,7 +136,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
             else if (game.stageId < 0xC) // dynamo fights...
             {
                 game.ranks[1] = 2;
-                hoursLeft = dynamoHoursTable[game.stageId - 9] * 3600 * 60;
+                hoursLeft = dynamoHoursTable[game.stageId - 9];
                 game.clearedStages = dynamoMaverickClearedTable[game.stageId - 9];
                 parts = dynamoPartsTable[game.stageId - 9];
                 game.stageSelectMode = dynamoStageSelectModeTable[game.stageId - 9];
@@ -140,7 +145,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
             }
             else
             { // other sigma stages
-                game.ranks[1] = 2;
+                hoursLeft -= game.stageId - 0x10; 
                 game.stageSelectMode = game.stageId - 0x10 + 5;
 
                 if (practice.ultimateArmor && game.stageId == 0x12)
@@ -151,6 +156,8 @@ void AssignWeapons() // 2 routes: All Stages & Any%
 
                 if (practice.route == 0)
                 {
+                    game.ranks[1] = 2;
+                    hoursLeft = sigmaHoursTable[game.stageId - 0x10];
                     game.clearedStages = sigmaMaverickClearedTable[game.stageId - 0x10];
                     if (game.player != 0)
                     {
@@ -230,7 +237,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
             }
             else if (game.stageId == 0xC) // Final Level
             {
-                hoursLeft = 0;
+                hoursLeft = 1;
                 game.ranks[0] = 2;
                 game.ranks[1] = 2;
                 game.maxHPs[0] = 56;
@@ -306,4 +313,5 @@ void AssignWeapons() // 2 routes: All Stages & Any%
     }
     game.equipedParts[game.armorType] = parts;
     game.hoursLeft = hoursLeft  * 3600 * 60;
+    SaveRestore();
 }

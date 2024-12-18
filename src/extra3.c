@@ -8,10 +8,63 @@
 extern int8_t maxCheckPoint[];
 extern int8_t checkPointNew;
 
+static struct Restore
+{
+    int hours;
+    uint32_t collectables;
+    uint32_t collectables2;
+    uint8_t maxHP;
+    uint8_t armors;
+    uint8_t armorParts;
+    bool seen;
+};
+static struct Restore restore;
+
 void TitleDemoEnd(char *p);
 void TitleDemoPlay(char *p);
 
 void DrawDebugText(uint16_t x, uint16_t y, uint8_t clut, char *textP, ...);
+
+void SaveRestore()
+{
+    restore.hours = game.hoursLeft;
+    restore.collectables = game.collectables;
+    restore.collectables2 = game.collectables2;
+    restore.maxHP = game.maxHPs[game.player];
+    restore.armors = game.armors;
+    restore.armorParts = game.armorParts;
+    restore.seen = game.seenTextBoxes[0][0];
+}
+void LoadRestore()
+{
+    uint8_t val = 0;
+
+    if (game.stageId != 0x16)
+    {
+        game.hoursLeft = restore.hours;
+        game.collectables = restore.collectables;
+        game.collectables2 = restore.collectables2;
+        game.maxHPs[game.player] = restore.maxHP;
+        game.armors = restore.armors;
+        game.armorParts = restore.armorParts;
+
+        if ((game.clearedStages & 1) != 0) // give Sub-Tank some ammo
+        {
+            game.collectables |= 0x1000;
+            game.tanksAmmo[0] = 12;
+        }
+    }
+
+    if (game.stageId != 0x16 && restore.seen)
+    {
+        val = 0xFF;
+    }
+
+    for (size_t i = 0; i < 64; i++)
+    {
+        game.seenTextBoxes[0][i] = val;
+    }
+}
 
 void CheckPointMenu()
 {
@@ -40,6 +93,7 @@ void CheckPointMenu()
             game.mode4 = 0;
             game.point = 0;
             EndSong();
+            LoadRestore();
             NewThread2(MAIN_THREAD);
         }
 
@@ -74,8 +128,13 @@ void CheckPointMenu()
 void ResetAmmo(Game *gameP)
 {
     gameP->point = checkPointNew;
-    mega.hp = gameP->maxHPs[gameP->player];
-    memset(&mega.ammo[0], gameP->maxAmmos[gameP->player], 32);
+    gameP->virusMeterTemp = 0;
+    gameP->weaponTemp = 0;
+    gameP->hpTemp = gameP->maxHPs[gameP->player];
+    for (size_t i = 0; i < 16; i++)
+    {
+        gameP->ammoTemp[i] = gameP->maxAmmos[gameP->player] * 6;
+    }
 }
 void DrawLoadText()
 {
