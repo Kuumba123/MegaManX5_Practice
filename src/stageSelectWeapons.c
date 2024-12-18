@@ -122,6 +122,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                     hoursLeft = 1;
                     game.ranks[1] = 2;
                     game.clearedStages = 0xFF;
+                    game.collectables = 0x5000;
                     game.maxHPs[1] = 38;
                     game.maxAmmos[1] = 56;
 
