@@ -4,6 +4,7 @@
 
 #define RNG *(uint16_t *)0x80093F70
 #define MAIN_THREAD 0x80020904
+#define RELOAD *(uint8_t *)0x800d1598
 
 extern int8_t maxCheckPoint[];
 extern int8_t checkPointNew;
@@ -93,6 +94,7 @@ void CheckPointMenu()
             game.mode4 = 0;
             game.point = 0;
             game.mid = 0;
+            RELOAD = 0;
             EndSong();
             LoadRestore();
             NewThread2(MAIN_THREAD);
@@ -183,3 +185,4 @@ void ShowDemoEnigma2(char *p)
 
 #undef RNG
 #undef MAIN_THREAD
+#undef RELOAD
