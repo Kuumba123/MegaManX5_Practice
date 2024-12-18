@@ -66,6 +66,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
     game.ranks[0] = 5;
     game.ranks[1] = 3;
     game.zeroBuster = true;
+    *(uint8_t*)((int)&game + 0xCB) = 0x80; //set non awakening zero
 
     for (size_t i = 0; i < 6; i++)
     {
@@ -110,6 +111,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                 if (practice.ultimateArmor)
                 {
                     game.player = 0;
+                    game.ranks[0] = 4;
                     game.armorType = 4;
                 }
                 game.stageSelectMode = 8;
