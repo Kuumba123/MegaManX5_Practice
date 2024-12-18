@@ -26,11 +26,18 @@ void ProcessStagePicker(Game *gameP)
 
     if (gameP->mode4 == 0)
     {
+        int8_t max = 6;
+        if (practice.route == 1)
+        {
+            max = 4;
+        }
+        
+
         if ((int8_t)Cursor < 0)
         {
-            Cursor = 6;
+            Cursor = max;
         }
-        else if (Cursor >= 7)
+        else if (Cursor > max)
         {
             Cursor = 0;
         }
