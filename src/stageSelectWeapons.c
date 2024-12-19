@@ -29,7 +29,7 @@ static uint8_t mavericksHoursTable[8] = {14, 9, 11, 15, 5, 8, 10, 2};
 static uint8_t maverickHealthTable[8] = {32, 32, 32, 32, 32, 32, 32, 36};
 static uint8_t maverickAmmoTable[8] = {48, 52, 50, 48, 54, 54, 52, 56};
 static uint8_t maverickStageSelectModeTable[8] = {0, 5, 5, 0, 6, 5, 5, 8};
-static uint32_t maverickPartsTable[8] = {0, 0x10, 0x10, 0, 0x4030, 0x10, 0x10, 0x4030};
+static uint32_t maverickPartsTable[8] = {0, 0x10, 0x10, 0, 0x4030, 0x10, 0x10, 0xC030};
 /*****/
 static uint8_t dynamoHoursTable[2] = {13, 7};
 static uint8_t dynamoMaverickClearedTable[2] = {9, 0x6F};
@@ -116,7 +116,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                 }
                 game.stageSelectMode = 8;
                 game.armors = 0x10;
-                hoursLeft = 12;
+                hoursLeft = 14; //doesnt make sense but whatever
                 if (practice.route == 0) // All Stages
                 {
                     hoursLeft = 1;
@@ -128,7 +128,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
 
                     if (!practice.ultimateArmor)
                     {
-                        parts = 0x4030;
+                        parts = 0xC030;
                     }
                     else
                     {
