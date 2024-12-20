@@ -50,7 +50,7 @@ void LoadRestore()
         game.maxHPs[game.player] = restore.maxHP;
         game.armors = restore.armors;
         game.armorParts = restore.armorParts;
-        game.ultimateArmor = game.ultimateArmor;
+        game.ultimateArmor = restore.ultimateArmor;
 
         if ((game.clearedStages & 1) != 0) // give Sub-Tank some ammo
         {
