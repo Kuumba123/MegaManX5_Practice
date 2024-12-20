@@ -72,10 +72,14 @@ void TitleManip(struct Title *titleP)
 
             ((uint8_t *)((int)&game))[0xC2] = 1;
             ((uint8_t *)((int)&game))[0xC3] = 2;
-            ((uint8_t *)((int)&game))[0xC4] = 5;
-            ((uint8_t *)((int)&game))[0xC5] = 3;
-
+            ((uint8_t *)((int)&game))[0xC4] = 3;
+            ((uint8_t *)((int)&game))[0xC5] = 2;
+            ((uint8_t *)((int)&game))[0xC6] = 2;
+            ((uint8_t *)((int)&game))[0xC7] = 2;
+            ((uint8_t *)((int)&game))[0xC8] = 2;
+            ((uint8_t *)((int)&game))[0xC9] = 2;
             ((uint8_t *)((int)&game))[0xCA] = 0;
+            ((uint8_t *)((int)&game))[0xCB] = 0;
 
             game.hoursLeft = 2793525;
 
