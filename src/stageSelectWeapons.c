@@ -55,6 +55,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
     game.stageSelectMode = 0;
     game.armorParts = 0;
     game.armors = 0;
+    game.ultimateArmor = false;
     game.clearedStages = 0;
     game.collectables = 0;
     game.collectables2 = 0;
