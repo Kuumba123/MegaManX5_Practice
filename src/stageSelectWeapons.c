@@ -25,13 +25,15 @@ static uint8_t hundoDynamoHoursTable[2] = {10, 5};
 
 /*All Stages & Any%*/
 static uint8_t mavericksClearedTable[8] = {8, 0x4D, 9, 0, 0x6F, 0x4F, 0xD, 0x7F};
-static uint8_t mavericksHoursTable[8] = {14, 9, 11, 15, 5, 8, 10, 2};
+static uint8_t mavericksHoursTable[8] = {14, 11, 13, 15, 7, 10, 12, 4};
 static uint8_t maverickHealthTable[8] = {32, 32, 32, 32, 32, 32, 32, 36};
 static uint8_t maverickAmmoTable[8] = {48, 52, 50, 48, 54, 54, 52, 56};
 static uint8_t maverickStageSelectModeTable[8] = {0, 5, 5, 0, 6, 5, 5, 8};
-static uint32_t maverickPartsTable[8] = {0, 0x10, 0x10, 0, 0x4030, 0x10, 0x10, 0xC030};
+static uint8_t mavericksRankTable[8] = {2, 2, 1, 3, 2, 2, 2, 2};
+static uint32_t maverickPartsTable[8] = {0, 0x10, 0, 0, 0x4030, 0x10, 0x10, 0xC030};
 /*****/
-static uint8_t dynamoHoursTable[2] = {13, 7};
+static uint8_t dynamoHoursTable[2] = {13, 9};
+static uint8_t dynamoRankTable[2] = {1, 2};
 static uint8_t dynamoMaverickClearedTable[2] = {9, 0x6F};
 static uint32_t dynamoPartsTable[2] = {0, 0x4030};
 static uint8_t dynamoStageSelectModeTable[2] = {0, 5};
@@ -42,14 +44,14 @@ static uint8_t sigmaMaverickClearedTable[3] = {0x6F, 0x7F, 0x7F};
 static uint32_t sigmaPartsTable[3] = {0x4030, 0x4030, 0x4030};
 static uint8_t sigmaHealthTable[3] = {36, 36, 36};
 static uint8_t sigmaAmmoTable[3] = {54, 54, 56};
-static uint8_t sigmaHoursTable[3] = {6,4,3};
+static uint8_t sigmaHoursTable[3] = {8,6,5};
 
 void SaveRestore();
 
 void AssignWeapons() // 2 routes: All Stages & Any%
 {
     uint32_t parts = 0;
-    uint8_t hoursLeft = 16;
+    uint8_t hoursLeft = 16; //NOTE: enigma shot can increase the hours by 1,2,3 or 4 hours
     game.stageSelectMode = 0;
     game.armorParts = 0;
     game.armors = 0;
@@ -95,10 +97,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
         {
             if (game.stageId <= 8) // 8 Maverick Stages
             {
-                if (game.stageId != 4)
-                {
-                    game.ranks[1] = 2;
-                }
+                game.ranks[1] = mavericksRankTable[game.stageId - 1];
                 game.clearedStages = mavericksClearedTable[game.stageId - 1];
                 hoursLeft = mavericksHoursTable[game.stageId - 1];
                 game.maxHPs[1] = maverickHealthTable[game.stageId - 1];
@@ -116,10 +115,10 @@ void AssignWeapons() // 2 routes: All Stages & Any%
                 }
                 game.stageSelectMode = 8;
                 game.armors = 0x10;
-                hoursLeft = 14; //doesnt make sense but whatever
+                hoursLeft = 14; //doesnt make sense but whatever (edit: hours are increased after enigma shot)
                 if (practice.route == 0) // All Stages
                 {
-                    hoursLeft = 1;
+                    hoursLeft = 3;
                     game.ranks[1] = 2;
                     game.clearedStages = 0xFF;
                     game.collectables = 0x5000;
@@ -138,7 +137,7 @@ void AssignWeapons() // 2 routes: All Stages & Any%
             }
             else if (game.stageId < 0xC) // dynamo fights...
             {
-                game.ranks[1] = 2;
+                game.ranks[1] = dynamoRankTable[game.stageId - 9];
                 hoursLeft = dynamoHoursTable[game.stageId - 9];
                 game.clearedStages = dynamoMaverickClearedTable[game.stageId - 9];
                 parts = dynamoPartsTable[game.stageId - 9];
