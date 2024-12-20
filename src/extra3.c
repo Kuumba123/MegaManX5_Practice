@@ -17,6 +17,7 @@ static struct Restore
     uint8_t maxHP;
     uint8_t armors;
     uint8_t armorParts;
+    bool ultimateArmor;
     bool seen;
 };
 static struct Restore restore;
@@ -34,6 +35,7 @@ void SaveRestore()
     restore.maxHP = game.maxHPs[game.player];
     restore.armors = game.armors;
     restore.armorParts = game.armorParts;
+    restore.ultimateArmor = game.ultimateArmor;
     restore.seen = game.seenTextBoxes[0][0];
 }
 void LoadRestore()
@@ -48,6 +50,7 @@ void LoadRestore()
         game.maxHPs[game.player] = restore.maxHP;
         game.armors = restore.armors;
         game.armorParts = restore.armorParts;
+        game.ultimateArmor = game.ultimateArmor;
 
         if ((game.clearedStages & 1) != 0) // give Sub-Tank some ammo
         {
