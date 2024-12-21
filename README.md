@@ -7,6 +7,8 @@ NOTE these steps might change in the future so keep that in mind when fetching t
  * My Fork of Red-Hot's PSX Modding Repro https://github.com/Kuumba123/psx-modding-toolchain
  * My MMX5 PSX Repro https://github.com/Kuumba123/MegaManX5_PS1_Modding
 
+Also your gonna need the psyq library files (`psyq-4.7-converted-full.7z`) from https://psx.arthus.net/sdk/Psy-Q/
+
 Once you have all 3 go back to the github with Red-Hot's PSX modding repro and following the instructions there. If you can compile any of the examples included in that repro you should be able to compile this one.
 
 Then put the MegaMan X5 PSX repro inside the `games` folder and then this repro inside your `mods` folder and put your MegaMan X5 ISO files inside the `build` folder (must be named `MMX5.cue` and `MMX5.bin`).
