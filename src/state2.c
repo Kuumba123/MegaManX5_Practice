@@ -118,7 +118,7 @@ int16_t freeAddressSizes[] = {
     0x1BC0
 };
 
-int16_t addressesSize[] = {
+int16_t addressesSize[] = { //0x13140
     0x2800, // Clut
     0x2800, // Inverted Clut
     0x1380, // Weapon Objects
