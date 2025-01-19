@@ -6,5 +6,8 @@ overlay.ld
 Makefile
 *.dep
 *.o
-#MegaMan X5 Files
+#MegaMan X6 Files
 *.DAT
+*.BIN
+arc/american/ARC
+arc/japanese/ARC
